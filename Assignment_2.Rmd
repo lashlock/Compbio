@@ -11,5 +11,3 @@ This are the four tools that I used to structure my hypothesis.
 
 ![Path Analysis](path_analysis.jpg)
 
-[Homework 2](Assignment_2.html)
-
