@@ -2,7 +2,10 @@
 title: "Bio 381 Portforlio"
 author: "Lauren Ashlock"
 date: "January 18, 2017"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: Tactile
+    highlight: github
 ---
 
 #### Computational Biology: Spring 2017

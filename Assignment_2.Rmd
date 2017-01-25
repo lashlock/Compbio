@@ -1,0 +1,15 @@
+---
+title: "Assignment 2"
+author: "Lauren Ashlock"
+date: "January 25, 2017"
+output: html_document
+---
+
+This are the four tools that I used to structure my hypothesis. 
+
+![Logic Tree](logic_tree.jpg)
+
+![Path Analysis](path_analysis.jpg)
+
+[Homework 2](Assignment_2.html)
+
