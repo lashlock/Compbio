@@ -9,5 +9,10 @@ This are the four tools that I used to structure my hypothesis.
 
 ![Logic Tree](logic_tree.jpg)
 
+![Look up Table](look_up_table.jpg)
+
+![Mock Data](mock_data.jpg)
+
 ![Path Analysis](path_analysis.jpg)
+
 
