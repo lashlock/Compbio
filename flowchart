@@ -1,0 +1,17 @@
+```mermaid
+graph TD
+A[Genomic basis of copepod local adaptation to harmful algae] -->B(No significant difference in genetic composition)
+A[Genomic basis of copepod local adaptation to harmful algae] -->C(Many genes of small effect)
+A[Genomic basis of copepod local adaptation to harmful algae] -->D(Small number of genes of moderate effect)
+	B[No significant difference in genetic composition] -->E(Regulatory mechanisms)
+	B[No significant difference in genetic composition] -->F(Too much noise)
+	C[Many genes of small effect] -->G(complex trait refined over many generations)
+	D[Small number of genes of moderate effect] -->H(Simple gene/allele driving difference, minimal pleiotropy)
+		H[Simple gene/allele driving difference, minimal pleiotropy] -->I(Difference in genes associated with saxitoxin tolerance in other organisms)
+		H[Simple gene/allele driving difference, minimal pleiotropy] -->J(Unique mechanism of tolerance)
+			I[Difference in genes associated with saxitoxin tolerance in other organisms] -->K(Ion channels)
+			I[Difference in genes associated with saxitoxin tolerance in other organisms] -->L(Metabolism)
+			I[Difference in genes associated with saxitoxin tolerance in other organisms] -->M(Neutralization proteins)
+   
+```
+

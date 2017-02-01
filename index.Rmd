@@ -24,6 +24,9 @@ output:
 
 [Homework 2](Assignment_2.html)
 
+[Homework 3_flowchart](flowchart.html)
+
+
 ### Notes:
 
 #####Lecture
