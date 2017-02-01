@@ -1,0 +1,53 @@
+---
+title: ""
+author: ""
+date: ""
+output: beamer_presentation
+---
+
+## Pre-Lab Quiz
+
+1. Define hypothesis   
+2. What is the hypothesis you will be testing today?   
+3. What are your anticipated results?   
+
+
+ 
+## Some notes before we start...
+
+- If you are using inhibitor   
+    - Buffer volume of inhibitor   
+    - Waste goes in the fume hood   
+- All groups must run at least two control trials
+
+
+
+\bigskip
+       ``` **A note about gloves**```
+       
+       
+##Materials and Methdos
+
+To assess the effects of soil pH on plant growth, soil samples of various pH’s were placed in separate green pots and labeled using masking tape and a black marker. A few seeds were planted in each pot. Plants were grown under lights and watered occasionally for several weeks. Various characteristics were then assessed to compare the plants. 
+
+## Materials and Methods
+
+To assess the effects of soil pH on plant growth, soil samples of \color{red} various pH’s \color{black} were placed in separate ~~green~~ pots and ~~labeled using masking tape and a black marker~~.\color{red} A few seeds \color{black} were planted in each pot. Plants were grown under lights and watered occasionally for several weeks.\color{red} Various characteristics \color{black} were then assessed to compare the plants. 
+
+## Results Section
+
+- A reminder that your results section includes tables and figures, but no interpretation. 
+
+## Before you leave lab today
+
+- Baseline peroxidase enzyme data as an excel worksheet and a properly formatted graph   
+- Fit line to linear part of curve   
+- Set intercept to = 0, and display r² value   
+
+
+
+
+
+
+
+
