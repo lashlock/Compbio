@@ -31,6 +31,14 @@ output:
 [beamer_md](Beamer_Presentation.Rmd)   
 [beamer_pdf](Beamer_Presentation.pdf)   
 
+#####Homework 4
+
+[creating a .csv file in Excel](homework_4.html)   
+
+[Working with Regular Expressions](RegularExpressions.html)
+
+
+
 
 ### Notes:
 

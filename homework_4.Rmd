@@ -1,0 +1,22 @@
+---
+title: "Homework_4"
+author: "Lauren Ashlock"
+date: "February 8, 2017"
+output: html_document
+---
+
+```{r}
+morphology_data<-read.table("C:/Users/Lauren/Desktop/Gradschool/UVM/Spring 2017/Computational Biology/Bio381/compbio/OASV2_BodyLengthMeasurements_Oct2016.csv", header=T, sep=",", stringsAsFactors = F)
+
+str(morphology_data)
+
+summary(morphology_data)
+
+
+table(morphology_data$Condition)
+
+head(morphology_data)
+
+tail(morphology_data)
+```
+

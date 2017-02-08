@@ -1,0 +1,146 @@
+---
+title: "Regular Expressions"
+author: "Lauren Ashlock"
+date: "February 8, 2017"
+output: html_document
+---
+
+####1.   
+
+**Original Text**
+```
+First String    Second      1.22      3.4
+Second          More Text   1.555555  2.2220
+Third           x           3         124
+```
+**Regular Expressions Used**
+```
+Find:\s{2,}
+Replace:,
+```
+
+**Edited Text**
+``` 
+
+First String,Second,1.22,3.4,Second,More Text,1.555555,2.2220,Third,x,3,124
+```
+####2.   
+
+**Original Text**
+```
+Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr
+```
+
+**Regular Expressions Used**
+```
+Find:(\w+), (\w+), (\w+)
+Replace:\2, \1 \(\3\)
+```
+
+**Edited Text**
+
+```
+Bryan Ballif (University of Vermont)
+Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)
+```
+
+####3.   
+
+Step:1
+**Original Text**
+```
+0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3
+```
+
+**Regular Expressions Used**
+```
+Find:mp3 
+Replace:mp3 \r
+```
+
+**Edited Text**
+
+```
+0001 Georgia Horseshoe.mp3 
+0002 Billy In The Lowground.mp3 
+0003 Cherokee Shuffle.mp3 
+0004 Walking Cane.mp3
+```
+
+
+Step:2
+**Original Text**
+```
+0001 Georgia Horseshoe.mp3 
+0002 Billy In The Lowground.mp3 
+0003 Cherokee Shuffle.mp3 
+0004 Walking Cane.mp3
+```
+
+**Regular Expressions Used**
+```
+Find:(\d+) (.+)[.mp3]{4}
+Replace:\2_\1.mp3
+```
+
+**Edited Text**
+
+```
+Georgia Horseshoe_0001.mp3
+Billy In The Lowground_0002.mp3
+Cherokee Shuffle_0003.mp3
+Walking Cane_0004.mp3
+```
+
+####4.   
+
+Part 1:
+**Original Text**
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+```
+
+**Regular Expressions Used**
+```
+Find:(\w)(\w+),(\w+),(.+),(\d+)
+Replace:\1_\3,\5
+```
+
+**Edited Text**
+
+```
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55
+```
+
+Part 2:
+**Original Text**
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+```
+
+**Regular Expressions Used**
+```
+Find:(\w)(\w+),(\w{4})(\w+),(.+),(\d+)
+Replace:\1_\3,\6
+```
+
+**Edited Text**
+
+```
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55
+```
