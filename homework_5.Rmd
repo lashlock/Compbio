@@ -1,0 +1,343 @@
+---
+title: "Homework 5"
+author: "Lauren Ashlock"
+date: "February 15, 2017"
+output: html_document
+---
+
+##Question 1
+###Suppose x = 1.1, a = 2.2, and b = 3.3. Assign each expression to the value of the variable z and 
+###print the value stored in z.
+
+####Assigning values to x, a, and b
+```{r}
+
+x<- 1.1
+
+a<- 2.2
+
+b<- 3.3
+```
+
+####pt a
+```{r}
+z<- x^a^b
+z
+```
+
+####pt b
+```{r}
+z<- (x^a)^b
+z
+```
+
+####pt c
+```{r}
+z<- 3*x^3 + 2*x^2 + 1
+z
+```
+
+
+####pt d
+```{r}
+floor((z%%1)*10)
+```
+
+####the z%%1 will grab everything after the 1s place (all decimals)   
+####the floor(*10) grabs the digit in the first decimal place
+
+
+##Question 2 Using the rep and seq functions create the following vectors
+
+####pt a (1,2,3,4,5,6,7,8,7,6,5,4,3,2,1)
+
+```{r}
+SEQ1<- seq(1,8,1)
+SEQ2<- seq(7,1,-1)
+SEQ3<-c(SEQ1,SEQ2)
+SEQ3
+```
+
+
+####pt b (1,2,2,3,3,3,4,4,4,4,5,5,5,5,5)
+```{r}
+c(1,rep(2,2),rep(3,3),rep(4,4),rep(5,5))
+```
+
+
+
+####pt c (5,4,4,3,3,3,2,2,2,2,1,1,1,1,1)
+```{r}
+c(5,rep(4,2),rep(3,3),rep(2,4),rep(1,5))
+```
+
+
+##Question 3
+###Create a vector of two random uniform numbers. In a spatial map, these can be interpreted as x and y coordinates 
+###that give the location of an individual (such as a marked forest tree in a plot that has been mapped). 
+###Using one of R’s inverse trigonometry functions (asin(), acos(), or atan()), convert these numbers into 
+###polar coordinates (If you don’t know what polar coordinates are, read about them on the web or in your calculus 
+###textbook).
+```{r}
+xy<-c(runif(2))
+xy
+
+theta<-atan(xy[2]/xy[1])
+theta
+
+r<- sqrt((xy[2])^2+(xy[1])^2)
+r
+
+polarcoord<- c(r,theta)
+polarcoord
+```
+
+
+
+##Question 4 
+###Suppose that queue <- c("sheep", "fox", "owl", "ant") and that queue represents the animals 
+###that are lined up to enter Noah’s Ark, with the sheep at the front of the line. Using R expressions, 
+###update the queue successively as
+```{r}
+queue<- c("sheep","fox","owl","ant")
+queue
+```
+
+
+####pt a the serpent arrives;
+```{r}
+append(queue,"serpent")
+queue[5]<-"serpent"
+```
+
+
+####pt b the sheep enters the ark;
+```{r}
+queue<- queue[2:5]
+queue
+```
+
+
+####pt c the donkey arrives and talks his way to the front of the line;
+```{r}
+queue<- c("donkey",queue)
+queue
+```
+
+
+####pt d the serpent gets impatient and leaves;
+```{r}
+queue<-queue[1:4]
+queue
+```
+
+
+####pt e the owl gets bored and leaves;
+```{r}
+queue<-queue[-3]
+queue
+```
+
+
+####pt f the aphid arrives and the ant invites him to cut in line.
+```{r}
+queue<-c(queue[1:2],"aphid","ant")
+queue
+```
+
+
+####pt g Finally, determine the position of the aphid in the line.
+```{r}
+which(queue=="aphid")
+```
+
+
+##Question 5 
+###Use R to create a vector of all of the integers from 1 to 100 that are not divisible by 2, 3, or 7
+
+```{r}
+
+vec<- seq(1,100)
+vec
+vec2<- (vec %% 2!=0)&(vec %% 3!=0)&(vec %% 7!=0)
+
+final<-vec[vec2]
+final
+```
+
+##Question 6 
+###Create a vector z of 1000 random uniform numbers
+```{r}
+z<- runif(1000)
+head(z)
+```
+
+
+####pt a create a vector that contains 3 numbers: the proportion 
+####of the numbers in z that are less than 0.10, greater than 0.90, and between 0.45 and 0.55.
+
+```{r}
+a<-which(z<0.1)
+
+a<-length(a)
+a
+element1<-a/1000
+element1
+
+b<-which(z<0.9)
+
+b<-length(b)
+b
+element2<-b/1000
+element2
+
+c<-which((z>.45)&(z<.55))
+c<-length(c)
+c
+
+element3<-c/1000
+element3
+
+
+propvec<-c(element1,element2,element3)
+
+propvec
+```
+
+
+
+####pt b Making successive copies of z, transform your vector of uniform numbers in the following ways:
+####pt c for each case calculate your vector of 3 numbers to get the new proportions.
+####log (base 10) of z
+```{r}
+z<-log(z)
+head(z)
+
+a<-which(z<0.1)
+
+a<-length(a)
+a
+element1<-a/1000
+element1
+
+b<-which(z<0.9)
+
+b<-length(b)
+b
+element2<-b/1000
+element2
+
+c<-which((z>.45)&(z<.55))
+c<-length(c)
+c
+
+element3<-c/1000
+element3
+
+
+logzpropvec<-c(element1,element2,element3)
+
+logzpropvec
+```
+
+
+####z^2
+```{r}
+z<- z^2
+head(z)
+
+a<-which(z<0.1)
+
+a<-length(a)
+a
+element1<-a/1000
+element1
+
+b<-which(z<0.9)
+
+b<-length(b)
+b
+element2<-b/1000
+element2
+
+c<-which((z>.45)&(z<.55))
+c<-length(c)
+c
+
+element3<-c/1000
+element3
+
+
+zsquarepropvec<-c(element1,element2,element3)
+
+zsquarepropvec
+```
+
+
+####e^z
+```{r}
+z<-exp(1)^z
+head(z)
+
+
+a<-which(z<0.1)
+
+a<-length(a)
+a
+element1<-a/1000
+element1
+
+b<-which(z<0.9)
+
+b<-length(b)
+b
+element2<-b/1000
+element2
+
+c<-which((z>.45)&(z<.55))
+c<-length(c)
+c
+
+element3<-c/1000
+element3
+
+
+ezpropvec<-c(element1,element2,element3)
+
+ezpropvec
+```
+
+####square root of z
+```{r}
+z<-sqrt(z)
+head(z)
+
+a<-which(z<0.1)
+
+a<-length(a)
+a
+element1<-a/1000
+element1
+
+b<-which(z<0.9)
+
+b<-length(b)
+b
+element2<-b/1000
+element2
+
+c<-which((z>.45)&(z<.55))
+c<-length(c)
+c
+
+element3<-c/1000
+element3
+
+
+sqrtpropvec<-c(element1,element2,element3)
+
+sqrtpropvec
+```
+
+
+

@@ -37,6 +37,8 @@ output:
 
 [Working with Regular Expressions](RegularExpressions.html)
 
+#####Homework 5
+[Basic R commands](homework_5.html)
 
 
 
