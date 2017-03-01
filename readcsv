@@ -1,0 +1,22 @@
+###`read.csv`
+####Lauren Ashlock
+
+This function reads in a file that is in table format, and creates a data frame from it. 
+Default settings: read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+         
+Arguments:
+ - file: this is the file you want to be read from   
+ - header: This is a logical value stating whether or not the file you are reading in contains the header names in the first line   
+ - sep: This describes how your characters are separated the default is space, but you can also use ","   
+ - quote:This argument denotes how your character strings are delimited. The default is to delimit strings by double quotes but you can also delimit strings by single quotes. If you want to disable quotes you can use quote = ""   
+ - dec: The character used in the file for decimal points    
+ - fill: a logical. If TRUE, then if your rows have unequeal length, blank fields are added.    
+ - comment.char: A character vector of length one containing a single character or empty string. The default is to use "" . This turns off the interpretation of comments. 
+ 
+ 
+```{r}
+#example
+read.csv(file="OASV2_BodyLengthMeasurements_Oct2016.csv", header = TRUE, sep =",", quote="\"", dec=".", fill=TRUE, comment.char="")
+```
+

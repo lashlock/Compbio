@@ -114,21 +114,93 @@ rbind(1:4, c=2, "a++"=10, deparse.level =0) #this names the rows of the middle t
 
 rbind(1:4, c=2, "a++"=10, dd, deparse.level=1) #this names the last three arguments (this is the default setting)
 
-rbind(1:4, c=2, "a++" =10, dd, deparse.level=2) #takes the 
-
-
-
-
-
-
-
-
-
+rbind(1:4, c=2, "a++" =10, dd, deparse.level=2) #takes the names from each element
 
 ```
+
+###`readRDS`
+####Lauren Ashlock
+
+This function is used to write a single R object to a file, and to restore that object. 
+Arguments: 
+ - object: R object to be written to a file   
+ - file: a connection or the name of the file where the R object is saved to or read from   
+ - ascii: A logical. If TRUE or NA, an ASCII representation is written. The default for this argument is FALSE. This results in a binary representation.   
+ - version: This argument will only be relevant with versions newer than the default version (2).   
+ - compress: A logical stating whether or not you want your saved object to be compressed. The default for this argument is TRUE.   
+ - refhook: This is a hook function for handling reference objects. The default for this argument is NULL. 
 
 
 ```{r}
+#example
+
+##save a single object to file
+copepod<-10
+saveRDS(object=copepod, file="copepod.rds")
+##restore it under a different name
+copepod2 <- readRDS(file="copepod.rds")
+identical(copepod, copepod2)
 
 ```
+
+
+###`<<-`
+####Lauren Ashlock
+
+This function assigns a value to a variable. The arguments used are the variable and a value to be assigned to x. The difference between this function and the <- function is that <<- will search through parent environments of a package you are working in for the variable you have called. If it finds the variable in the parent environment, it will assign the value for the variable in the parent environment to the variable in your global environment. If it does not find the variable, then assignment takes place in the global environment. 
+
+```{r}
+#example
+outer_func <- function(){
+   inner_func <- function(){
+       a <<- 30
+       print(a)
+   }
+   inner_func()
+   print(a)
+}
+
+outer_func()
+print(a)
+
+```
+
+###`read.csv`
+####Lauren Ashlock
+
+This function reads in a file that is in table format, and creates a data frame from it. 
+Default settings: read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+         
+Arguments:
+ - file: this is the file you want to be read from   
+ - header: This is a logical value stating whether or not the file you are reading in contains the header names in the first line   
+ - sep: This describes how your characters are separated the default is space, but you can also use ","   
+ - quote:This argument denotes how your character strings are delimited. The default is to delimit strings by double quotes but you can also delimit strings by single quotes. If you want to disable quotes you can use quote = ""   
+ - dec: The character used in the file for decimal points    
+ - fill: a logical. If TRUE, then if your rows have unequeal length, blank fields are added.    
+ - comment.char: A character vector of length one containing a single character or empty string. The default is to use "" . This turns off the interpretation of comments. 
+ 
+ 
+```{r}
+#example
+read.csv(file="OASV2_BodyLengthMeasurements_Oct2016.csv", header = FALSE, sep =",", quote="\"", dec=".", fill=TRUE, comment.char="")
+```
+
+
+
+###`sign`
+####Lauren Ashlock
+
+This function returns a vector with signs of the corresponding elements of a variable. The output gives you 1 for positive values, 0, or -1 for negative values. The only argument for this function is a numeric vector
+
+```{r}
+MyVec <- c(0, 2, 5, 7, -1, -4, -7, 0, 5, -4)
+sign(MyVec)
+
+```
+
+
+
+
 

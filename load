@@ -1,0 +1,23 @@
+###`load`
+####Lauren Ashlock
+
+- The load funtion loads R objects that have already been saved in R. The arguments for this function are the file, envir, and verbose.    
+- The input for the file argument is a connection or character string that gives the name of the file you want to reload.   
+- The envir argument designates the environment where you want the data to be loaded. This can be useful for avoiding any overwriting of existing objects with the same name in the current environment. It is best to use envir= to load the object into a different environment.   
+- The verbose argument designates whether or not you want item names to be printed as they load.This argument can be useful for debugging. The output of this function is a character vector of the names of objects created.   
+- This is particularly useful for saving and reloading .Rdata or .Rhistory files (saving your workspace) into your current environment.
+
+```{r}
+#example
+save.image(file= "homework_6.RData") #save your workspace
+
+#To load this make sure you are in the current working directory
+#in which you saved this workspace then run the following code
+
+load(file= "homework_6.RData")
+
+#the default settings are to load the file in the global environment and to have verbose = False. In order to debug...
+
+load(file= "homework_6.Rdata",verbose= TRUE)
+```
+

@@ -1,0 +1,25 @@
+###`readRDS`
+####Lauren Ashlock
+
+This function is used to write a single R object to a file, and to restore that object. 
+Arguments: 
+ - object: R object to be written to a file   
+ - file: a connection or the name of the file where the R object is saved to or read from   
+ - ascii: A logical. If TRUE or NA, an ASCII representation is written. The default for this argument is FALSE. This results in a binary representation.   
+ - version: This argument will only be relevant with versions newer than the default version (2).   
+ - compress: A logical stating whether or not you want your saved object to be compressed. The default for this argument is TRUE.   
+ - refhook: This is a hook function for handling reference objects. The default for this argument is NULL. 
+
+
+```{r}
+#example
+
+##save a single object to file
+copepod<-10
+saveRDS(object=copepod, file="copepod.rds")
+##restore it under a different name
+copepod2 <- readRDS(file="copepod.rds")
+identical(copepod, copepod2)
+
+```
+

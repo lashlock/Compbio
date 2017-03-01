@@ -283,12 +283,1331 @@ rbind(1:4, c=2, &quot;a++&quot;=10, deparse.level =0) #this names the rows of th
 ## c      2    2    2    2
 ## a++   10   10   10   10
 ## dd    10   10   10   10</code></pre>
-<pre class="r"><code>rbind(1:4, c=2, &quot;a++&quot; =10, dd, deparse.level=2) #takes the </code></pre>
+<pre class="r"><code>rbind(1:4, c=2, &quot;a++&quot; =10, dd, deparse.level=2) #takes the names from each element</code></pre>
 <pre><code>##     [,1] [,2] [,3] [,4]
 ## 1:4    1    2    3    4
 ## c      2    2    2    2
 ## a++   10   10   10   10
 ## dd    10   10   10   10</code></pre>
+</div>
+</div>
+<div id="readrds" class="section level3">
+<h3><code>readRDS</code></h3>
+<div id="lauren-ashlock-3" class="section level4">
+<h4>Lauren Ashlock</h4>
+<p>This function is used to write a single R object to a file, and to restore that object. Arguments: - object: R object to be written to a file<br />
+- file: a connection or the name of the file where the R object is saved to or read from<br />
+- ascii: A logical. If TRUE or NA, an ASCII representation is written. The default for this argument is FALSE. This results in a binary representation.<br />
+- version: This argument will only be relevant with versions newer than the default version (2).<br />
+- compress: A logical stating whether or not you want your saved object to be compressed. The default for this argument is TRUE.<br />
+- refhook: This is a hook function for handling reference objects. The default for this argument is NULL.</p>
+<pre class="r"><code>#example
+
+##save a single object to file
+copepod&lt;-10
+saveRDS(object=copepod, file=&quot;copepod.rds&quot;)
+##restore it under a different name
+copepod2 &lt;- readRDS(file=&quot;copepod.rds&quot;)
+identical(copepod, copepod2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<div id="section" class="section level3">
+<h3><code>&lt;&lt;-</code></h3>
+<div id="lauren-ashlock-4" class="section level4">
+<h4>Lauren Ashlock</h4>
+<p>This function assigns a value to a variable. The arguments used are the variable and a value to be assigned to x. The difference between this function and the &lt;- function is that &lt;&lt;- will search through parent environments of a package you are working in for the variable you have called. If it finds the variable in the parent environment, it will assign the value for the variable in the parent environment to the variable in your global environment. If it does not find the variable, then assignment takes place in the global environment.</p>
+<pre class="r"><code>#example
+outer_func &lt;- function(){
+   inner_func &lt;- function(){
+       a &lt;&lt;- 30
+       print(a)
+   }
+   inner_func()
+   print(a)
+}
+
+outer_func()</code></pre>
+<pre><code>## [1] 30
+## [1] 30</code></pre>
+<pre class="r"><code>print(a)</code></pre>
+<pre><code>## [1] 30</code></pre>
+</div>
+</div>
+<div id="read.csv" class="section level3">
+<h3><code>read.csv</code></h3>
+<div id="lauren-ashlock-5" class="section level4">
+<h4>Lauren Ashlock</h4>
+<p>This function reads in a file that is in table format, and creates a data frame from it. Default settings: read.csv(file, header = TRUE, sep = “,”, quote = “&quot;”, dec = “.”, fill = TRUE, comment.char = “”, …)</p>
+<p>Arguments: - file: this is the file you want to be read from<br />
+- header: This is a logical value stating whether or not the file you are reading in contains the header names in the first line<br />
+- sep: This describes how your characters are separated the default is space, but you can also use “,”<br />
+- quote:This argument denotes how your character strings are delimited. The default is to delimit strings by double quotes but you can also delimit strings by single quotes. If you want to disable quotes you can use quote = “”<br />
+- dec: The character used in the file for decimal points<br />
+- fill: a logical. If TRUE, then if your rows have unequeal length, blank fields are added.<br />
+- comment.char: A character vector of length one containing a single character or empty string. The default is to use “” . This turns off the interpretation of comments.</p>
+<pre class="r"><code>#example
+read.csv(file=&quot;OASV2_BodyLengthMeasurements_Oct2016.csv&quot;, header = FALSE, sep =&quot;,&quot;, quote=&quot;\&quot;&quot;, dec=&quot;.&quot;, fill=TRUE, comment.char=&quot;&quot;)</code></pre>
+<pre><code>##                                                                                                                                                                                                                                          V1
+## 1                                                                                                                                                                                                    #/////////////////////////////////////
+## 2                                                                                                                                                                                                            # -----START OF METADATA -----
+## 3                                                                                                                                                                                        # ------------------------------------------------
+## 4                                                                                                                                                                          # TITLE: OASV2 Strongylocentrotus purpuratus Plutei Body Lengths
+## 5                                                                                                                                                                                                                      # DATE: October 2016
+## 6                                                                                                                                                                                                                  # AUTHOR: Lauren Ashlock
+## 7                                                                                                                                                                                        # ------------------------------------------------
+## 8                                                                                                                                                                                                    # AUTHOR EMAIL: Lauren.Ashlock@uvm.edu
+## 9                                                                                                                                                 # AUTHOR ADDRESS: 109 Carrigan Drive; Marsh Life Sci Bldg; Rm. 324; Burlington; VT 05405&quot;
+## 10                                                                                                                                                                                                                    # AUTHOR WEBSITE: TBD
+## 11                                                                                                                                                                                       # ------------------------------------------------
+## 12                                                                                                                                                                                 # OWNERSHIP: Dr. Melissa Pespeni; University of Vermont&quot;
+## 13                                                                                                                                                           # COLLABORATORS: April Makukhov; Heidi Hargarten; Kate Huber; Melissa Pespeni&quot;
+## 14                                                                                                                                                                       # FUNDING SOURCES: NSF DGE-1451866 for ADM; University of Vermont&quot;
+## 15                                                                                                                         # REPOSITORY: One or more lines for GitHub; Dryad; or permanent web repositories where data set can be accessed&quot;
+## 16                                                                                                                                                              # CITATIONS: One or more lines for publications that cite or use these data
+## 17                                                                                                                                                                                       # ------------------------------------------------
+## 18                                                                    # SAMPLING LOCATIONS: Adult purple urchins were collected from San Diego; CA and were spawned in the Pespeni marine lab (14 females &amp; 11 males) to make these larvae&quot;
+## 19                                                                                                                                                              # SAMPLING TIMES: These data are from 7-Day old plutei purple urchin larvae
+## 20  # VARIABLE DESCRIPTION: ID = individual larval ID; pH = mean pH treatment; condition = static or variable pH treatment; vessel_ID = vessel replicate that larvae came from; Body_Length = entire length of each pluteus larvae (in um)&quot;
+## 21                                                                                                                                        # MISSING DATA: One or more lines for each variable describing the source of NA values throughout
+## 22                                                                                                                                                                                       # ------------------------------------------------
+## 23                                                                                                                                    # DATA TRACK CHANGES LOG (use this section to record any changes to the data set after it is created)
+## 24                                                                                                                                                                                                          # DATE:              # CHANGES:
+## 25                                                                                                                                                                                                          # DATE:              # CHANGES:
+## 26                                                                                                                                                                                                          # DATE:              # CHANGES:
+## 27                                                                                                                                                                                                            #DATE:              #CHANGES:
+## 28                                                                                                                                                                                       # ------------------------------------------------
+## 29                                                                                                                                                                                                            # ----- END OF METADATA -----
+## 30                                                                                                                                                                                                   #/////////////////////////////////////
+## 31                                                                                                                                                                                                                                        #
+## 32                                                                                                                                                                                                                                        #
+## 33                                                                                                                                                                                                              # ----- START OF DATA -----
+## 34                                                                                                                                                                                                                                        #
+## 35                                                                                                                                                                                                                                       ID
+## 36                                                                                                                                                                                                                                       L1
+## 37                                                                                                                                                                                                                                       L2
+## 38                                                                                                                                                                                                                                       L3
+## 39                                                                                                                                                                                                                                       L4
+## 40                                                                                                                                                                                                                                       L5
+## 41                                                                                                                                                                                                                                       L6
+## 42                                                                                                                                                                                                                                       L7
+## 43                                                                                                                                                                                                                                       L8
+## 44                                                                                                                                                                                                                                       L9
+## 45                                                                                                                                                                                                                                      L10
+## 46                                                                                                                                                                                                                                      L11
+## 47                                                                                                                                                                                                                                      L12
+## 48                                                                                                                                                                                                                                      L13
+## 49                                                                                                                                                                                                                                      L14
+## 50                                                                                                                                                                                                                                      L15
+## 51                                                                                                                                                                                                                                      L16
+## 52                                                                                                                                                                                                                                      L17
+## 53                                                                                                                                                                                                                                      L18
+## 54                                                                                                                                                                                                                                      L19
+## 55                                                                                                                                                                                                                                      L20
+## 56                                                                                                                                                                                                                                      L21
+## 57                                                                                                                                                                                                                                      L22
+## 58                                                                                                                                                                                                                                      L23
+## 59                                                                                                                                                                                                                                      L24
+## 60                                                                                                                                                                                                                                      L25
+## 61                                                                                                                                                                                                                                      L26
+## 62                                                                                                                                                                                                                                      L27
+## 63                                                                                                                                                                                                                                      L28
+## 64                                                                                                                                                                                                                                      L29
+## 65                                                                                                                                                                                                                                      L30
+## 66                                                                                                                                                                                                                                      L31
+## 67                                                                                                                                                                                                                                      L32
+## 68                                                                                                                                                                                                                                      L33
+## 69                                                                                                                                                                                                                                      L34
+## 70                                                                                                                                                                                                                                      L35
+## 71                                                                                                                                                                                                                                      L36
+## 72                                                                                                                                                                                                                                      L37
+## 73                                                                                                                                                                                                                                      L38
+## 74                                                                                                                                                                                                                                      L39
+## 75                                                                                                                                                                                                                                      L40
+## 76                                                                                                                                                                                                                                      L41
+## 77                                                                                                                                                                                                                                      L42
+## 78                                                                                                                                                                                                                                      L43
+## 79                                                                                                                                                                                                                                      L44
+## 80                                                                                                                                                                                                                                      L45
+## 81                                                                                                                                                                                                                                      L46
+## 82                                                                                                                                                                                                                                      L47
+## 83                                                                                                                                                                                                                                      L48
+## 84                                                                                                                                                                                                                                      L49
+## 85                                                                                                                                                                                                                                      L50
+## 86                                                                                                                                                                                                                                      L51
+## 87                                                                                                                                                                                                                                      L52
+## 88                                                                                                                                                                                                                                      L53
+## 89                                                                                                                                                                                                                                      L54
+## 90                                                                                                                                                                                                                                      L55
+## 91                                                                                                                                                                                                                                      L56
+## 92                                                                                                                                                                                                                                      L57
+## 93                                                                                                                                                                                                                                      L58
+## 94                                                                                                                                                                                                                                      L59
+## 95                                                                                                                                                                                                                                      L60
+## 96                                                                                                                                                                                                                                      L61
+## 97                                                                                                                                                                                                                                      L62
+## 98                                                                                                                                                                                                                                      L63
+## 99                                                                                                                                                                                                                                      L64
+## 100                                                                                                                                                                                                                                     L65
+## 101                                                                                                                                                                                                                                     L66
+## 102                                                                                                                                                                                                                                     L67
+## 103                                                                                                                                                                                                                                     L68
+## 104                                                                                                                                                                                                                                     L69
+## 105                                                                                                                                                                                                                                     L70
+## 106                                                                                                                                                                                                                                     L71
+## 107                                                                                                                                                                                                                                     L72
+## 108                                                                                                                                                                                                                                     L73
+## 109                                                                                                                                                                                                                                     L74
+## 110                                                                                                                                                                                                                                     L75
+## 111                                                                                                                                                                                                                                     L76
+## 112                                                                                                                                                                                                                                     L77
+## 113                                                                                                                                                                                                                                     L78
+## 114                                                                                                                                                                                                                                     L79
+## 115                                                                                                                                                                                                                                     L80
+## 116                                                                                                                                                                                                                                     L81
+## 117                                                                                                                                                                                                                                     L82
+## 118                                                                                                                                                                                                                                     L83
+## 119                                                                                                                                                                                                                                     L84
+## 120                                                                                                                                                                                                                                     L85
+## 121                                                                                                                                                                                                                                     L86
+## 122                                                                                                                                                                                                                                     L87
+## 123                                                                                                                                                                                                                                     L88
+## 124                                                                                                                                                                                                                                     L89
+## 125                                                                                                                                                                                                                                     L90
+## 126                                                                                                                                                                                                                                     L91
+## 127                                                                                                                                                                                                                                     L92
+## 128                                                                                                                                                                                                                                     L93
+## 129                                                                                                                                                                                                                                     L94
+## 130                                                                                                                                                                                                                                     L95
+## 131                                                                                                                                                                                                                                     L96
+## 132                                                                                                                                                                                                                                     L97
+## 133                                                                                                                                                                                                                                     L98
+## 134                                                                                                                                                                                                                                     L99
+## 135                                                                                                                                                                                                                                    L100
+## 136                                                                                                                                                                                                                                    L101
+## 137                                                                                                                                                                                                                                    L102
+## 138                                                                                                                                                                                                                                    L103
+## 139                                                                                                                                                                                                                                    L104
+## 140                                                                                                                                                                                                                                    L105
+## 141                                                                                                                                                                                                                                    L106
+## 142                                                                                                                                                                                                                                    L107
+## 143                                                                                                                                                                                                                                    L108
+## 144                                                                                                                                                                                                                                    L109
+## 145                                                                                                                                                                                                                                    L110
+## 146                                                                                                                                                                                                                                    L111
+## 147                                                                                                                                                                                                                                    L112
+## 148                                                                                                                                                                                                                                    L113
+## 149                                                                                                                                                                                                                                    L114
+## 150                                                                                                                                                                                                                                    L115
+## 151                                                                                                                                                                                                                                    L116
+## 152                                                                                                                                                                                                                                    L117
+## 153                                                                                                                                                                                                                                    L118
+## 154                                                                                                                                                                                                                                    L119
+## 155                                                                                                                                                                                                                                    L120
+## 156                                                                                                                                                                                                                                    L121
+## 157                                                                                                                                                                                                                                    L122
+## 158                                                                                                                                                                                                                                    L123
+## 159                                                                                                                                                                                                                                    L124
+## 160                                                                                                                                                                                                                                    L125
+## 161                                                                                                                                                                                                                                    L126
+## 162                                                                                                                                                                                                                                    L127
+## 163                                                                                                                                                                                                                                    L128
+## 164                                                                                                                                                                                                                                    L129
+## 165                                                                                                                                                                                                                                    L130
+## 166                                                                                                                                                                                                                                    L131
+## 167                                                                                                                                                                                                                                    L132
+## 168                                                                                                                                                                                                                                    L133
+## 169                                                                                                                                                                                                                                    L134
+## 170                                                                                                                                                                                                                                    L135
+## 171                                                                                                                                                                                                                                    L136
+## 172                                                                                                                                                                                                                                    L137
+## 173                                                                                                                                                                                                                                    L138
+## 174                                                                                                                                                                                                                                    L139
+## 175                                                                                                                                                                                                                                    L140
+## 176                                                                                                                                                                                                                                    L141
+## 177                                                                                                                                                                                                                                    L142
+## 178                                                                                                                                                                                                                                    L143
+## 179                                                                                                                                                                                                                                    L144
+## 180                                                                                                                                                                                                                                    L145
+## 181                                                                                                                                                                                                                                    L146
+## 182                                                                                                                                                                                                                                    L147
+## 183                                                                                                                                                                                                                                    L148
+## 184                                                                                                                                                                                                                                    L149
+## 185                                                                                                                                                                                                                                    L150
+## 186                                                                                                                                                                                                                                    L151
+## 187                                                                                                                                                                                                                                    L152
+## 188                                                                                                                                                                                                                                    L153
+## 189                                                                                                                                                                                                                                    L154
+## 190                                                                                                                                                                                                                                    L155
+## 191                                                                                                                                                                                                                                    L156
+## 192                                                                                                                                                                                                                                    L157
+## 193                                                                                                                                                                                                                                    L158
+## 194                                                                                                                                                                                                                                    L159
+## 195                                                                                                                                                                                                                                    L160
+## 196                                                                                                                                                                                                                                    L161
+## 197                                                                                                                                                                                                                                    L162
+## 198                                                                                                                                                                                                                                    L163
+## 199                                                                                                                                                                                                                                    L164
+## 200                                                                                                                                                                                                                                    L165
+## 201                                                                                                                                                                                                                                    L166
+## 202                                                                                                                                                                                                                                    L167
+## 203                                                                                                                                                                                                                                    L168
+## 204                                                                                                                                                                                                                                    L169
+## 205                                                                                                                                                                                                                                    L170
+## 206                                                                                                                                                                                                                                    L171
+## 207                                                                                                                                                                                                                                    L172
+## 208                                                                                                                                                                                                                                    L173
+## 209                                                                                                                                                                                                                                    L174
+## 210                                                                                                                                                                                                                                    L175
+## 211                                                                                                                                                                                                                                    L176
+## 212                                                                                                                                                                                                                                    L177
+## 213                                                                                                                                                                                                                                    L178
+## 214                                                                                                                                                                                                                                    L179
+## 215                                                                                                                                                                                                                                    L180
+## 216                                                                                                                                                                                                                                    L181
+## 217                                                                                                                                                                                                                                    L182
+## 218                                                                                                                                                                                                                                    L183
+## 219                                                                                                                                                                                                                                    L184
+## 220                                                                                                                                                                                                                                    L185
+## 221                                                                                                                                                                                                                                    L186
+## 222                                                                                                                                                                                                                                    L187
+## 223                                                                                                                                                                                                                                    L188
+## 224                                                                                                                                                                                                                                    L189
+## 225                                                                                                                                                                                                                                    L190
+## 226                                                                                                                                                                                                                                    L191
+## 227                                                                                                                                                                                                                                    L192
+## 228                                                                                                                                                                                                                                    L193
+## 229                                                                                                                                                                                                                                    L194
+## 230                                                                                                                                                                                                                                    L195
+## 231                                                                                                                                                                                                                                    L196
+## 232                                                                                                                                                                                                                                    L197
+## 233                                                                                                                                                                                                                                    L198
+## 234                                                                                                                                                                                                                                    L199
+## 235                                                                                                                                                                                                                                    L200
+## 236                                                                                                                                                                                                                                    L201
+## 237                                                                                                                                                                                                                                    L202
+## 238                                                                                                                                                                                                                                    L203
+## 239                                                                                                                                                                                                                                    L204
+## 240                                                                                                                                                                                                                                    L205
+## 241                                                                                                                                                                                                                                    L206
+## 242                                                                                                                                                                                                                                    L207
+## 243                                                                                                                                                                                                                                    L208
+## 244                                                                                                                                                                                                                                    L209
+## 245                                                                                                                                                                                                                                    L210
+## 246                                                                                                                                                                                                                                    L211
+## 247                                                                                                                                                                                                                                    L212
+## 248                                                                                                                                                                                                                                    L213
+## 249                                                                                                                                                                                                                                    L214
+## 250                                                                                                                                                                                                                                    L215
+## 251                                                                                                                                                                                                                                    L216
+## 252                                                                                                                                                                                                                                    L217
+## 253                                                                                                                                                                                                                                    L218
+## 254                                                                                                                                                                                                                                    L219
+## 255                                                                                                                                                                                                                                    L220
+## 256                                                                                                                                                                                                                                    L221
+## 257                                                                                                                                                                                                                                    L222
+## 258                                                                                                                                                                                                                                    L223
+## 259                                                                                                                                                                                                                                    L224
+## 260                                                                                                                                                                                                                                    L225
+## 261                                                                                                                                                                                                                                    L226
+## 262                                                                                                                                                                                                                                    L227
+## 263                                                                                                                                                                                                                                    L228
+## 264                                                                                                                                                                                                                                    L229
+## 265                                                                                                                                                                                                                                    L230
+## 266                                                                                                                                                                                                                                    L231
+## 267                                                                                                                                                                                                                                    L232
+## 268                                                                                                                                                                                                                                    L233
+## 269                                                                                                                                                                                                                                    L234
+## 270                                                                                                                                                                                                                                    L235
+## 271                                                                                                                                                                                                                                    L236
+## 272                                                                                                                                                                                                                                    L237
+## 273                                                                                                                                                                                                                                    L238
+## 274                                                                                                                                                                                                                                    L239
+## 275                                                                                                                                                                                                                                    L240
+## 276                                                                                                                                                                                                                                    L241
+## 277                                                                                                                                                                                                                                    L242
+## 278                                                                                                                                                                                                                                    L243
+## 279                                                                                                                                                                                                                                    L244
+## 280                                                                                                                                                                                                                                    L245
+## 281                                                                                                                                                                                                                                    L246
+## 282                                                                                                                                                                                                                                    L247
+## 283                                                                                                                                                                                                                                    L248
+## 284                                                                                                                                                                                                                                    L249
+## 285                                                                                                                                                                                                                                    L250
+## 286                                                                                                                                                                                                                                    L251
+## 287                                                                                                                                                                                                                                    L252
+## 288                                                                                                                                                                                                                                    L253
+## 289                                                                                                                                                                                                                                    L254
+## 290                                                                                                                                                                                                                                    L255
+## 291                                                                                                                                                                                                                                    L256
+## 292                                                                                                                                                                                                                                    L257
+## 293                                                                                                                                                                                                                                    L258
+## 294                                                                                                                                                                                                                                    L259
+## 295                                                                                                                                                                                                                                    L260
+## 296                                                                                                                                                                                                                                    L261
+## 297                                                                                                                                                                                                                                    L262
+## 298                                                                                                                                                                                                                                    L263
+## 299                                                                                                                                                                                                                                    L264
+## 300                                                                                                                                                                                                                                    L265
+## 301                                                                                                                                                                                                                                    L266
+## 302                                                                                                                                                                                                                                    L267
+## 303                                                                                                                                                                                                                                    L268
+## 304                                                                                                                                                                                                                                    L269
+## 305                                                                                                                                                                                                                                    L270
+## 306                                                                                                                                                                                                                                    L271
+## 307                                                                                                                                                                                                                                    L272
+## 308                                                                                                                                                                                                                                    L273
+## 309                                                                                                                                                                                                                                    L274
+## 310                                                                                                                                                                                                                                    L275
+## 311                                                                                                                                                                                                                                    L276
+## 312                                                                                                                                                                                                                                    L277
+## 313                                                                                                                                                                                                                                    L278
+## 314                                                                                                                                                                                                                                    L279
+## 315                                                                                                                                                                                                                                    L280
+## 316                                                                                                                                                                                                                                    L281
+## 317                                                                                                                                                                                                                                    L282
+## 318                                                                                                                                                                                                                                    L283
+## 319                                                                                                                                                                                                                                    L284
+## 320                                                                                                                                                                                                                                    L285
+## 321                                                                                                                                                                                                                                    L286
+## 322                                                                                                                                                                                                                                    L287
+## 323                                                                                                                                                                                                                                    L288
+## 324                                                                                                                                                                                                                                    L289
+## 325                                                                                                                                                                                                                                    L290
+## 326                                                                                                                                                                                                                                    L291
+## 327                                                                                                                                                                                                                                    L292
+## 328                                                                                                                                                                                                                                    L293
+## 329                                                                                                                                                                                                                                    L294
+## 330                                                                                                                                                                                                                                    L295
+## 331                                                                                                                                                                                                                                    L296
+## 332                                                                                                                                                                                                                                    L297
+## 333                                                                                                                                                                                                                                    L298
+## 334                                                                                                                                                                                                                                    L299
+## 335                                                                                                                                                                                                                                    L300
+## 336                                                                                                                                                                                                                                    L301
+## 337                                                                                                                                                                                                                                    L302
+## 338                                                                                                                                                                                                                                    L303
+## 339                                                                                                                                                                                                                                    L304
+## 340                                                                                                                                                                                                                                    L305
+## 341                                                                                                                                                                                                                                    L306
+## 342                                                                                                                                                                                                                                    L307
+## 343                                                                                                                                                                                                                                    L308
+## 344                                                                                                                                                                                                                                    L309
+## 345                                                                                                                                                                                                                                    L310
+## 346                                                                                                                                                                                                                                    L311
+## 347                                                                                                                                                                                                                                    L312
+## 348                                                                                                                                                                                                                                    L313
+## 349                                                                                                                                                                                                                                    L314
+## 350                                                                                                                                                                                                                                    L315
+## 351                                                                                                                                                                                                                                    L316
+## 352                                                                                                                                                                                                                                    L317
+## 353                                                                                                                                                                                                                                    L318
+## 354                                                                                                                                                                                                                                    L319
+## 355                                                                                                                                                                                                                                    L320
+## 356                                                                                                                                                                                                                                    L321
+## 357                                                                                                                                                                                                                                    L322
+## 358                                                                                                                                                                                                                                    L323
+## 359                                                                                                                                                                                                                                    L324
+## 360                                                                                                                                                                                                                                    L325
+## 361                                                                                                                                                                                                                                    L326
+## 362                                                                                                                                                                                                                                    L327
+## 363                                                                                                                                                                                                                                    L328
+## 364                                                                                                                                                                                                                                    L329
+## 365                                                                                                                                                                                                                                    L330
+## 366                                                                                                                                                                                                                                    L331
+## 367                                                                                                                                                                                                                                    L332
+## 368                                                                                                                                                                                                                                    L333
+## 369                                                                                                                                                                                                                                    L334
+## 370                                                                                                                                                                                                                                    L335
+## 371                                                                                                                                                                                                                                    L336
+## 372                                                                                                                                                                                                                                    L337
+## 373                                                                                                                                                                                                                                    L338
+## 374                                                                                                                                                                                                                                    L339
+## 375                                                                                                                                                                                                                                    L340
+## 376                                                                                                                                                                                                                                    L341
+## 377                                                                                                                                                                                                                                    L342
+## 378                                                                                                                                                                                                                                    L343
+## 379                                                                                                                                                                                                                                    L344
+## 380                                                                                                                                                                                                                                    L345
+## 381                                                                                                                                                                                                                                    L346
+## 382                                                                                                                                                                                                                                    L347
+## 383                                                                                                                                                                                                                                    L348
+## 384                                                                                                                                                                                                                                    L349
+## 385                                                                                                                                                                                                                                    L350
+## 386                                                                                                                                                                                                                                    L351
+## 387                                                                                                                                                                                                                                    L352
+## 388                                                                                                                                                                                                                                    L353
+## 389                                                                                                                                                                                                                                    L354
+## 390                                                                                                                                                                                                                                    L355
+## 391                                                                                                                                                                                                                                    L356
+## 392                                                                                                                                                                                                                                    L357
+## 393                                                                                                                                                                                                                                    L358
+## 394                                                                                                                                                                                                                                    L359
+## 395                                                                                                                                                                                                                                    L360
+## 396                                                                                                                                                                                                                                    L361
+## 397                                                                                                                                                                                                                                    L362
+## 398                                                                                                                                                                                                                                    L363
+## 399                                                                                                                                                                                                                                    L364
+## 400                                                                                                                                                                                                                                    L365
+## 401                                                                                                                                                                                                                                    L366
+## 402                                                                                                                                                                                                                                    L367
+## 403                                                                                                                                                                                                                                    L368
+## 404                                                                                                                                                                                                                                    L369
+## 405                                                                                                                                                                                                                                    L370
+## 406                                                                                                                                                                                                                                    L371
+## 407                                                                                                                                                                                                                                    L372
+## 408                                                                                                                                                                                                                                    L373
+## 409                                                                                                                                                                                                                                    L374
+## 410                                                                                                                                                                                                                                    L375
+## 411                                                                                                                                                                                                                                    L376
+## 412                                                                                                                                                                                                                                    L377
+## 413                                                                                                                                                                                                                                    L378
+## 414                                                                                                                                                                                                                                    L379
+## 415                                                                                                                                                                                                                                    L380
+## 416                                                                                                                                                                                                                                    L381
+## 417                                                                                                                                                                                                                                    L382
+## 418                                                                                                                                                                                                                                    L383
+## 419                                                                                                                                                                                                                                    L384
+## 420                                                                                                                                                                                                                                    L385
+## 421                                                                                                                                                                                                                                    L386
+## 422                                                                                                                                                                                                                                    L387
+## 423                                                                                                                                                                                                                                    L388
+## 424                                                                                                                                                                                                                                    L389
+## 425                                                                                                                                                                                                                                    L390
+## 426                                                                                                                                                                                                                                    L391
+## 427                                                                                                                                                                                                                                    L392
+## 428                                                                                                                                                                                                                                    L393
+## 429                                                                                                                                                                                                                                    L394
+## 430                                                                                                                                                                                                                                    L395
+## 431                                                                                                                                                                                                                                    L396
+## 432                                                                                                                                                                                                                                    L397
+## 433                                                                                                                                                                                                                                    L398
+## 434                                                                                                                                                                                                                                    L399
+## 435                                                                                                                                                                                                                                    L400
+## 436                                                                                                                                                                                                                                    L401
+## 437                                                                                                                                                                                                                                    L402
+## 438                                                                                                                                                                                                                                    L403
+## 439                                                                                                                                                                                                                                    L404
+## 440                                                                                                                                                                                                                                    L405
+## 441                                                                                                                                                                                                                                    L406
+## 442                                                                                                                                                                                                                                    L407
+## 443                                                                                                                                                                                                                                    L408
+## 444                                                                                                                                                                                                                                    L409
+## 445                                                                                                                                                                                                                                    L410
+## 446                                                                                                                                                                                                                                    L411
+## 447                                                                                                                                                                                                                                    L412
+## 448                                                                                                                                                                                                                                    L413
+## 449                                                                                                                                                                                                                                    L414
+## 450                                                                                                                                                                                                                                    L415
+## 451                                                                                                                                                                                                                                    L416
+## 452                                                                                                                                                                                                                                    L417
+## 453                                                                                                                                                                                                                                    L418
+## 454                                                                                                                                                                                                                                    L419
+## 455                                                                                                                                                                                                                                    L420
+## 456                                                                                                                                                                                                                                    L421
+## 457                                                                                                                                                                                                                                    L422
+## 458                                                                                                                                                                                                                                    L423
+## 459                                                                                                                                                                                                                                    L424
+## 460                                                                                                                                                                                                                                    L425
+## 461                                                                                                                                                                                                                                    L426
+## 462                                                                                                                                                                                                                                    L427
+## 463                                                                                                                                                                                                                                    L428
+## 464                                                                                                                                                                                                                                    L429
+## 465                                                                                                                                                                                                                                    L430
+## 466                                                                                                                                                                                                                                    L431
+## 467                                                                                                                                                                                                                                    L432
+## 468                                                                                                                                                                                                                                    L433
+## 469                                                                                                                                                                                                                                    L434
+## 470                                                                                                                                                                                                                                    L435
+## 471                                                                                                                                                                                                                                    L436
+## 472                                                                                                                                                                                                                                    L437
+## 473                                                                                                                                                                                                                                    L438
+## 474                                                                                                                                                                                                                                    L439
+## 475                                                                                                                                                                                                                                    L440
+## 476                                                                                                                                                                                                                                    L441
+## 477                                                                                                                                                                                                                                    L442
+## 478                                                                                                                                                                                                                                    L443
+## 479                                                                                                                                                                                                                                    L444
+## 480                                                                                                                                                                                                                                    L445
+## 481                                                                                                                                                                                                                                    L446
+## 482                                                                                                                                                                                                                                    L447
+## 483                                                                                                                                                                                                                                    L448
+## 484                                                                                                                                                                                                                                    L449
+## 485                                                                                                                                                                                                                                    L450
+## 486                                                                                                                                                                                                                                    L451
+## 487                                                                                                                                                                                                                                    L452
+## 488                                                                                                                                                                                                                                    L453
+## 489                                                                                                                                                                                                                                    L454
+## 490                                                                                                                                                                                                                                    L455
+## 491                                                                                                                                                                                                                                    L456
+## 492                                                                                                                                                                                                                                    L457
+## 493                                                                                                                                                                                                                                    L458
+## 494                                                                                                                                                                                                                                    L459
+## 495                                                                                                                                                                                                                                    L460
+## 496                                                                                                                                                                                                                                    L461
+## 497                                                                                                                                                                                                                                    L462
+## 498                                                                                                                                                                                                                                    L463
+## 499                                                                                                                                                                                                                                    L464
+## 500                                                                                                                                                                                                                                    L465
+## 501                                                                                                                                                                                                                                    L466
+## 502                                                                                                                                                                                                                                    L467
+## 503                                                                                                                                                                                                                                    L468
+## 504                                                                                                                                                                                                                                    L469
+## 505                                                                                                                                                                                                                                    L470
+## 506                                                                                                                                                                                                                                    L471
+## 507                                                                                                                                                                                                                                    L472
+## 508                                                                                                                                                                                                                                    L473
+## 509                                                                                                                                                                                                                                    L474
+## 510                                                                                                                                                                                                                                    L475
+## 511                                                                                                                                                                                                                                    L476
+## 512                                                                                                                                                                                                                                    L477
+## 513                                                                                                                                                                                                                                    L478
+## 514                                                                                                                                                                                                                                    L479
+## 515                                                                                                                                                                                                                                    L480
+## 516                                                                                                                                                                                                                                    L481
+## 517                                                                                                                                                                                                                                    L482
+## 518                                                                                                                                                                                                                                    L483
+## 519                                                                                                                                                                                                                                    L484
+## 520                                                                                                                                                                                                                                    L485
+## 521                                                                                                                                                                                                                                    L486
+## 522                                                                                                                                                                                                                                    L487
+## 523                                                                                                                                                                                                                                    L488
+## 524                                                                                                                                                                                                                                    L489
+## 525                                                                                                                                                                                                                                    L490
+## 526                                                                                                                                                                                                                                    L491
+## 527                                                                                                                                                                                                                                    L492
+## 528                                                                                                                                                                                                                                    L493
+## 529                                                                                                                                                                                                                                    L494
+## 530                                                                                                                                                                                                                                    L495
+## 531                                                                                                                                                                                                                                    L496
+## 532                                                                                                                                                                                                                                    L497
+## 533                                                                                                                                                                                                                                    L498
+## 534                                                                                                                                                                                                                                    L499
+## 535                                                                                                                                                                                                                                    L500
+## 536                                                                                                                                                                                                                                    L501
+## 537                                                                                                                                                                                                                                    L502
+## 538                                                                                                                                                                                                                                    L503
+## 539                                                                                                                                                                                                                                    L504
+## 540                                                                                                                                                                                                                                    L505
+## 541                                                                                                                                                                                                                                    L506
+## 542                                                                                                                                                                                                                                    L507
+## 543                                                                                                                                                                                                                                    L508
+## 544                                                                                                                                                                                                                                    L509
+## 545                                                                                                                                                                                                                                    L510
+## 546                                                                                                                                                                                                                                    L511
+## 547                                                                                                                                                                                                                                    L512
+## 548                                                                                                                                                                                                                                    L513
+## 549                                                                                                                                                                                                                                    L514
+## 550                                                                                                                                                                                                                                    L515
+## 551                                                                                                                                                                                                                                    L516
+## 552                                                                                                                                                                                                                                    L517
+## 553                                                                                                                                                                                                                                    L518
+## 554                                                                                                                                                                                                                                    L519
+## 555                                                                                                                                                                                                                                    L520
+## 556                                                                                                                                                                                                                                    L521
+## 557                                                                                                                                                                                                                                    L522
+## 558                                                                                                                                                                                                                                    L523
+## 559                                                                                                                                                                                                                                    L524
+## 560                                                                                                                                                                                                                                    L525
+## 561                                                                                                                                                                                                                                    L526
+## 562                                                                                                                                                                                                                                    L527
+## 563                                                                                                                                                                                                                                    L528
+## 564                                                                                                                                                                                                                                    L529
+## 565                                                                                                                                                                                                                                    L530
+## 566                                                                                                                                                                                                                                    L531
+## 567                                                                                                                                                                                                                                    L532
+## 568                                                                                                                                                                                                                                    L533
+## 569                                                                                                                                                                                                                                    L534
+## 570                                                                                                                                                                                                                                    L535
+## 571                                                                                                                                                                                                                                    L536
+## 572                                                                                                                                                                                                                                    L537
+## 573                                                                                                                                                                                                                                    L538
+## 574                                                                                                                                                                                                                                    L539
+## 575                                                                                                                                                                                                                                    L540
+## 576                                                                                                                                                                                                                                    L541
+## 577                                                                                                                                                                                                                                    L542
+## 578                                                                                                                                                                                                                                    L543
+## 579                                                                                                                                                                                                                                    L544
+## 580                                                                                                                                                                                                                                    L545
+## 581                                                                                                                                                                                                                                    L546
+## 582                                                                                                                                                                                                                                    L547
+## 583                                                                                                                                                                                                                                    L548
+## 584                                                                                                                                                                                                                                    L549
+## 585                                                                                                                                                                                                                                    L550
+## 586                                                                                                                                                                                                                                    L551
+## 587                                                                                                                                                                                                                                    L552
+## 588                                                                                                                                                                                                                                    L553
+## 589                                                                                                                                                                                                                                    L554
+## 590                                                                                                                                                                                                                                    L555
+## 591                                                                                                                                                                                                                                    L556
+## 592                                                                                                                                                                                                                                    L557
+## 593                                                                                                                                                                                                                                    L558
+## 594                                                                                                                                                                                                                                    L559
+## 595                                                                                                                                                                                                                                    L560
+## 596                                                                                                                                                                                                                                    L561
+## 597                                                                                                                                                                                                                                    L562
+## 598                                                                                                                                                                                                                                    L563
+## 599                                                                                                                                                                                                                                    L564
+## 600                                                                                                                                                                                                                                    L565
+## 601                                                                                                                                                                                                                                    L566
+## 602                                                                                                                                                                                                                                    L567
+## 603                                                                                                                                                                                                                                    L568
+## 604                                                                                                                                                                                                                                    L569
+## 605                                                                                                                                                                                                                                    L570
+## 606                                                                                                                                                                                                                                    L571
+## 607                                                                                                                                                                                                                                    L572
+## 608                                                                                                                                                                                                                                    L573
+## 609                                                                                                                                                                                                                                    L574
+## 610                                                                                                                                                                                                                                    L575
+## 611                                                                                                                                                                                                                                    L576
+## 612                                                                                                                                                                                                                                    L577
+## 613                                                                                                                                                                                                                                    L578
+## 614                                                                                                                                                                                                                                    L579
+## 615                                                                                                                                                                                                                                    L580
+## 616                                                                                                                                                                                                                                    L581
+## 617                                                                                                                                                                                                                                    L582
+## 618                                                                                                                                                                                                                                    L583
+## 619                                                                                                                                                                                                                                    L584
+## 620                                                                                                                                                                                                                                    L585
+## 621                                                                                                                                                                                                                                    L586
+## 622                                                                                                                                                                                                                                    L587
+## 623                                                                                                                                                                                                                                    L588
+## 624                                                                                                                                                                                                               # ----- END OF DATA -----
+##      V2        V3        V4          V5
+## 1                                      
+## 2                                      
+## 3                                      
+## 4                                      
+## 5                                      
+## 6                                      
+## 7                                      
+## 8                                      
+## 9                                      
+## 10                                     
+## 11                                     
+## 12                                     
+## 13                                     
+## 14                                     
+## 15                                     
+## 16                                     
+## 17                                     
+## 18                                     
+## 19                                     
+## 20                                     
+## 21                                     
+## 22                                     
+## 23                                     
+## 24                                     
+## 25                                     
+## 26                                     
+## 27                                     
+## 28                                     
+## 29                                     
+## 30                                     
+## 31                                     
+## 32                                     
+## 33                                     
+## 34                                     
+## 35   pH Condition Vessel_ID Body_Length
+## 36    7    static       V02     184.434
+## 37    7    static       V02     227.423
+## 38    7    static       V02     152.984
+## 39    7    static       V02     174.072
+## 40    7    static       V02     164.587
+## 41    7    static       V02      177.44
+## 42    7    static       V02     184.284
+## 43    7    static       V02     190.382
+## 44    7    static       V02     167.177
+## 45    7    static       V02     196.431
+## 46    7    static       V02     141.305
+## 47    7    static       V02     195.555
+## 48    7    static       V02     173.201
+## 49    7    static       V02     247.204
+## 50    7    static       V02     200.108
+## 51    7    static       V02     167.894
+## 52    7    static       V02     225.632
+## 53    7    static       V02     170.179
+## 54    7    static       V02     171.545
+## 55    7    static       V02      163.32
+## 56    7    static       V02     161.875
+## 57    7    static       V02     169.414
+## 58    7    static       V02     179.193
+## 59    7    static       V02     168.377
+## 60    7    static       V02     186.294
+## 61    7    static       V02     180.735
+## 62    7    static       V02      169.96
+## 63    7    static       V02     171.061
+## 64    7    static       V02     211.795
+## 65    7    static       V02     164.955
+## 66    7    static       V02     160.098
+## 67    7    static       V02     167.655
+## 68    7    static       V02     190.543
+## 69    7    static       V02     205.216
+## 70    7    static       V02     182.279
+## 71    7    static       V02     171.876
+## 72    7    static       V02      177.85
+## 73    7    static       V02     206.469
+## 74    7    static       V02     150.503
+## 75    7    static       V02      176.94
+## 76    7    static       V02     179.589
+## 77    7    static       V02     128.097
+## 78    7    static       V02     187.557
+## 79    7    static       V02     212.177
+## 80    7    static       V02     187.262
+## 81    7    static       V02     190.865
+## 82    7    static       V02      135.34
+## 83    7    static       V02     183.921
+## 84    7    static       V02     170.655
+## 85    7    static       V02     154.026
+## 86    7    static       V02     169.234
+## 87    7    static       V02     192.151
+## 88    7    static       V02     164.412
+## 89    7    static       V02     162.468
+## 90    7    static       V02     207.327
+## 91    7    static       V03     133.759
+## 92    7    static       V03     166.735
+## 93    7    static       V03      152.68
+## 94    7    static       V03     183.841
+## 95    7    static       V03     151.029
+## 96    7    static       V03     153.309
+## 97    7    static       V03     187.556
+## 98    7    static       V04     164.839
+## 99    7    static       V04     146.893
+## 100   7    static       V04     177.346
+## 101   7    static       V04     134.758
+## 102   7  variable       V08     224.959
+## 103   7  variable       V08     189.505
+## 104   7  variable       V08     248.575
+## 105   7  variable       V08     195.785
+## 106   7  variable       V08     243.962
+## 107   7  variable       V08     198.694
+## 108   7  variable       V08     134.414
+## 109   7  variable       V08     227.699
+## 110   7  variable       V08      186.73
+## 111   7  variable       V08     242.976
+## 112   7  variable       V08     211.569
+## 113   7  variable       V08     208.585
+## 114   7  variable       V08     222.883
+## 115   7  variable       V08     192.219
+## 116   7  variable       V08     200.749
+## 117   7  variable       V08     248.632
+## 118   7  variable       V08      222.58
+## 119   7  variable       V08     215.421
+## 120   7  variable       V08     201.573
+## 121   7  variable       V08     192.157
+## 122   7  variable       V10      212.19
+## 123   7  variable       V10     231.445
+## 124   7  variable       V10     195.253
+## 125   7  variable       V10     201.933
+## 126   7  variable       V10     216.574
+## 127   7  variable       V10      197.75
+## 128   7  variable       V10     210.983
+## 129   7  variable       V10      219.36
+## 130   7  variable       V10     194.151
+## 131   7  variable       V10      223.56
+## 132   7  variable       V10     185.429
+## 133   7  variable       V10     206.685
+## 134   7  variable       V10     223.514
+## 135   7  variable       V10     164.642
+## 136   7  variable       V10     218.886
+## 137   7  variable       V10     202.007
+## 138   7  variable       V10     208.009
+## 139   7  variable       V10     175.262
+## 140   7  variable       V10     199.123
+## 141   7  variable       V11     216.473
+## 142   7  variable       V11     196.642
+## 143   7  variable       V11     222.867
+## 144   7  variable       V11     238.211
+## 145   7  variable       V11     232.595
+## 146   7  variable       V11     214.897
+## 147   7  variable       V11     266.076
+## 148   7  variable       V11     192.708
+## 149   7  variable       V11     212.937
+## 150   7  variable       V11      198.78
+## 151   7  variable       V11      167.19
+## 152   7  variable       V11     217.889
+## 153   7  variable       V11     198.773
+## 154   7  variable       V11      175.46
+## 155   7  variable       V11     209.244
+## 156   7  variable       V11     224.552
+## 157   7  variable       V11     223.394
+## 158   7  variable       V11     162.466
+## 159   7  variable       V11      241.49
+## 160   7  variable       V12     187.396
+## 161   7  variable       V12     229.073
+## 162   7  variable       V12     148.226
+## 163   7  variable       V12     191.922
+## 164   7  variable       V12     223.213
+## 165   7  variable       V12     198.554
+## 166   7  variable       V12     233.326
+## 167   7  variable       V12     188.281
+## 168   7  variable       V12     206.166
+## 169   7  variable       V12     201.755
+## 170   7  variable       V12     219.343
+## 171   7  variable       V12     213.031
+## 172   7  variable       V12     222.681
+## 173   7  variable       V12     147.512
+## 174   7  variable       V12     171.083
+## 175   7  variable       V12     164.602
+## 176   7  variable       V12     242.381
+## 177   7  variable       V12     240.282
+## 178   7  variable       V12     125.395
+## 179   7  variable       V12     155.274
+## 180   7  variable       V12     228.584
+## 181   7  variable       V12     221.656
+## 182   7  variable       V12     214.076
+## 183   7  variable       V12     177.545
+## 184   7  variable       V12      161.93
+## 185   7  variable       V12     211.362
+## 186   7  variable       V12     186.943
+## 187   7  variable       V12     141.049
+## 188   7  variable       V12     177.485
+## 189   7  variable       V12     239.773
+## 190   7  variable       V12     159.551
+## 191   7  variable       V12     195.014
+## 192   7  variable       V12     213.967
+## 193 7.5    static       V20     280.548
+## 194 7.5    static       V20     250.875
+## 195 7.5    static       V20     262.879
+## 196 7.5    static       V20      226.25
+## 197 7.5    static       V20     191.489
+## 198 7.5    static       V20     230.911
+## 199 7.5    static       V20     246.737
+## 200 7.5    static       V20      239.15
+## 201 7.5    static       V20     213.898
+## 202 7.5    static       V20     236.542
+## 203 7.5    static       V20      265.64
+## 204 7.5    static       V20       180.9
+## 205 7.5    static       V20     302.083
+## 206 7.5    static       V20     252.769
+## 207 7.5    static       V20     290.196
+## 208 7.5    static       V20     253.102
+## 209 7.5    static       V20     239.921
+## 210 7.5    static       V20     251.797
+## 211 7.5    static       V20     227.885
+## 212 7.5    static       V20     187.324
+## 213 7.5    static       V20     239.231
+## 214 7.5    static       V20      268.54
+## 215 7.5    static       V20     266.365
+## 216 7.5    static       V20     270.149
+## 217 7.5    static       V20     213.126
+## 218 7.5    static       V20      251.22
+## 219 7.5    static       V20      271.43
+## 220 7.5    static       V20     174.027
+## 221 7.5    static       V20     250.507
+## 222 7.5    static       V20     253.251
+## 223 7.5    static       V20     245.243
+## 224 7.5    static       V20     242.376
+## 225 7.5    static       V20     248.924
+## 226 7.5    static       V21     250.316
+## 227 7.5    static       V21     242.988
+## 228 7.5    static       V21     312.266
+## 229 7.5    static       V21      243.84
+## 230 7.5    static       V21     249.322
+## 231 7.5    static       V21     229.986
+## 232 7.5    static       V21     256.006
+## 233 7.5    static       V21     222.155
+## 234 7.5    static       V21     207.217
+## 235 7.5    static       V21     230.521
+## 236 7.5    static       V21     247.675
+## 237 7.5    static       V21     241.766
+## 238 7.5    static       V22     279.099
+## 239 7.5    static       V22      260.36
+## 240 7.5    static       V22     226.688
+## 241 7.5    static       V22     250.465
+## 242 7.5    static       V22     219.906
+## 243 7.5    static       V22     265.559
+## 244 7.5    static       V22     235.632
+## 245 7.5    static       V22     259.438
+## 246 7.5    static       V22     276.037
+## 247 7.5    static       V22     304.723
+## 248 7.5    static       V22      297.19
+## 249 7.5    static       V22     257.539
+## 250 7.5    static       V22     180.436
+## 251 7.5    static       V22      242.73
+## 252 7.5    static       V22     225.809
+## 253 7.5    static       V22     235.955
+## 254 7.5    static       V22     255.706
+## 255 7.5    static       V22     253.169
+## 256 7.5    static       V22     227.866
+## 257 7.5    static       V22     258.681
+## 258 7.5    static       V22     275.389
+## 259 7.5    static       V22      261.58
+## 260 7.5    static       V22     272.376
+## 261 7.5    static       V22     193.267
+## 262 7.5    static       V22     217.176
+## 263 7.5    static       V23     257.889
+## 264 7.5    static       V23     239.378
+## 265 7.5    static       V23     202.704
+## 266 7.5    static       V23     261.514
+## 267 7.5    static       V23     225.758
+## 268 7.5    static       V23      220.42
+## 269 7.5    static       V23     217.662
+## 270 7.5    static       V23     224.881
+## 271 7.5    static       V23     211.856
+## 272 7.5    static       V23     204.269
+## 273 7.5    static       V23     183.817
+## 274 7.5    static       V23     203.818
+## 275 7.5    static       V23     188.785
+## 276 7.5    static       V23      206.17
+## 277 7.5    static       V23     204.716
+## 278 7.5    static       V23     205.496
+## 279 7.5    static       V23     248.549
+## 280 7.5    static       V23     233.094
+## 281 7.5    static       V23     236.015
+## 282 7.5    static       V23     217.957
+## 283 7.5    static       V23     197.822
+## 284 7.5    static       V23     210.133
+## 285 7.5  variable       V25     301.846
+## 286 7.5  variable       V25     308.223
+## 287 7.5  variable       V25      266.06
+## 288 7.5  variable       V25     261.469
+## 289 7.5  variable       V25     316.815
+## 290 7.5  variable       V25     312.615
+## 291 7.5  variable       V25     351.668
+## 292 7.5  variable       V25     327.355
+## 293 7.5  variable       V25     294.174
+## 294 7.5  variable       V25     295.513
+## 295 7.5  variable       V25      262.75
+## 296 7.5  variable       V25     351.956
+## 297 7.5  variable       V25     300.501
+## 298 7.5  variable       V25     268.087
+## 299 7.5  variable       V25     308.086
+## 300 7.5  variable       V25      311.93
+## 301 7.5  variable       V25     354.823
+## 302 7.5  variable       V25     257.212
+## 303 7.5  variable       V25     274.213
+## 304 7.5  variable       V25     290.748
+## 305 7.5  variable       V25     329.999
+## 306 7.5  variable       V25     269.516
+## 307 7.5  variable       V25     251.581
+## 308 7.5  variable       V25      312.99
+## 309 7.5  variable       V25     247.899
+## 310 7.5  variable       V25     347.995
+## 311 7.5  variable       V26      246.34
+## 312 7.5  variable       V26     256.162
+## 313 7.5  variable       V26     235.224
+## 314 7.5  variable       V26     231.789
+## 315 7.5  variable       V26       258.6
+## 316 7.5  variable       V26     234.371
+## 317 7.5  variable       V26     247.151
+## 318 7.5  variable       V26     214.248
+## 319 7.5  variable       V26     264.128
+## 320 7.5  variable       V26      206.68
+## 321 7.5  variable       V26     237.296
+## 322 7.5  variable       V26     285.844
+## 323 7.5  variable       V26     277.152
+## 324 7.5  variable       V26     243.096
+## 325 7.5  variable       V26     234.369
+## 326 7.5  variable       V26     250.494
+## 327 7.5  variable       V26     279.917
+## 328 7.5  variable       V26     250.019
+## 329 7.5  variable       V26     245.356
+## 330 7.5  variable       V26     245.721
+## 331 7.5  variable       V26     252.516
+## 332 7.5  variable       V26     248.759
+## 333 7.5  variable       V26     272.774
+## 334 7.5  variable       V26     206.569
+## 335 7.5  variable       V26     254.076
+## 336 7.5  variable       V29     287.498
+## 337 7.5  variable       V29     266.666
+## 338 7.5  variable       V29     253.575
+## 339 7.5  variable       V29     253.607
+## 340 7.5  variable       V29     225.393
+## 341 7.5  variable       V29     242.485
+## 342 7.5  variable       V29     249.651
+## 343 7.5  variable       V29     258.986
+## 344 7.5  variable       V29     269.375
+## 345 7.5  variable       V29     266.423
+## 346 7.5  variable       V29     274.565
+## 347 7.5  variable       V29     225.968
+## 348 7.5  variable       V29     241.439
+## 349 7.5  variable       V29       257.2
+## 350 7.5  variable       V29     266.205
+## 351 7.5  variable       V29     242.056
+## 352 7.5  variable       V29     226.049
+## 353 7.5  variable       V29     235.809
+## 354 7.5  variable       V29     257.622
+## 355 7.5  variable       V29     228.725
+## 356 7.5  variable       V29     238.292
+## 357 7.5  variable       V29     273.924
+## 358 7.5  variable       V29     224.544
+## 359 7.5  variable       V29     212.395
+## 360 7.5  variable       V29     264.316
+## 361 7.5  variable       V29     199.479
+## 362 7.5  variable       V29     231.561
+## 363 7.5  variable       V29     272.212
+## 364 7.5  variable       V29     255.995
+## 365 7.5  variable       V29     200.371
+## 366 7.5  variable       V29      228.46
+## 367 7.5  variable       V29     257.648
+## 368 7.5  variable       V29      250.21
+## 369 7.5  variable       V30     243.532
+## 370 7.5  variable       V30     190.557
+## 371 7.5  variable       V30     266.687
+## 372 7.5  variable       V30     248.203
+## 373 7.5  variable       V30     205.286
+## 374 7.5  variable       V30     251.196
+## 375 7.5  variable       V30     274.657
+## 376 7.5  variable       V30     246.014
+## 377 7.5  variable       V30     285.756
+## 378 7.5  variable       V30     292.874
+## 379 7.5  variable       V30      249.85
+## 380 7.5  variable       V30      251.86
+## 381 7.5  variable       V30     278.922
+## 382 7.5  variable       V30     283.437
+## 383 7.5  variable       V30     236.223
+## 384 7.5  variable       V30     273.601
+## 385 7.5  variable       V30      233.17
+## 386 7.5  variable       V30     249.015
+## 387 7.5  variable       V30     267.389
+## 388 7.5  variable       V30     236.282
+## 389 7.5  variable       V30     228.579
+## 390 7.5  variable       V30     293.319
+## 391 7.5  variable       V30     258.526
+## 392 7.5  variable       V30     270.034
+## 393 7.5  variable       V30      287.75
+## 394 7.5  variable       V30     220.149
+## 395 7.5  variable       V30     281.859
+## 396 7.5  variable       V30     259.079
+## 397 7.5  variable       V30     253.355
+## 398 7.5  variable       V30     251.042
+## 399 7.5  variable       V30     248.173
+## 400   8    static       V15     257.035
+## 401   8    static       V15     298.416
+## 402   8    static       V15     256.064
+## 403   8    static       V15     314.013
+## 404   8    static       V15     322.715
+## 405   8    static       V15     296.175
+## 406   8    static       V15     342.825
+## 407   8    static       V15      307.53
+## 408   8    static       V15     278.099
+## 409   8    static       V15     235.139
+## 410   8    static       V15     341.037
+## 411   8    static       V15     324.328
+## 412   8    static       V15     317.779
+## 413   8    static       V15     318.919
+## 414   8    static       V15     250.125
+## 415   8    static       V15     323.023
+## 416   8    static       V15     290.918
+## 417   8    static       V15      287.71
+## 418   8    static       V15       333.9
+## 419   8    static       V15      235.94
+## 420   8    static       V15      254.61
+## 421   8    static       V16     309.581
+## 422   8    static       V16     335.052
+## 423   8    static       V16     313.568
+## 424   8    static       V16     346.353
+## 425   8    static       V16     359.522
+## 426   8    static       V16     291.248
+## 427   8    static       V16     310.667
+## 428   8    static       V16     338.474
+## 429   8    static       V16     350.375
+## 430   8    static       V16     338.378
+## 431   8    static       V16     301.582
+## 432   8    static       V16     395.448
+## 433   8    static       V16     334.563
+## 434   8    static       V16     337.489
+## 435   8    static       V16     309.765
+## 436   8    static       V16     339.543
+## 437   8    static       V16     348.299
+## 438   8    static       V16     329.662
+## 439   8    static       V16     318.536
+## 440   8    static       V16     311.672
+## 441   8    static       V16     347.026
+## 442   8    static       V17     317.788
+## 443   8    static       V17     343.363
+## 444   8    static       V17      316.15
+## 445   8    static       V17     334.053
+## 446   8    static       V17     302.244
+## 447   8    static       V17     331.805
+## 448   8    static       V17      340.55
+## 449   8    static       V17     317.448
+## 450   8    static       V17     342.351
+## 451   8    static       V17     303.258
+## 452   8    static       V17     328.339
+## 453   8    static       V17     338.108
+## 454   8    static       V17     325.008
+## 455   8    static       V17     288.645
+## 456   8    static       V17     301.879
+## 457   8    static       V17     292.252
+## 458   8    static       V17     358.986
+## 459   8    static       V17     322.654
+## 460   8    static       V17     303.722
+## 461   8    static       V17     322.278
+## 462   8    static       V17      355.92
+## 463   8    static       V17      365.34
+## 464   8    static       V17     341.335
+## 465   8    static       V17     348.162
+## 466   8    static       V17     334.572
+## 467   8    static       V17     355.758
+## 468   8    static       V17     354.898
+## 469   8    static       V17     340.753
+## 470   8    static       V18     357.456
+## 471   8    static       V18     318.029
+## 472   8    static       V18     290.028
+## 473   8    static       V18     329.661
+## 474   8    static       V18     343.525
+## 475   8    static       V18     289.446
+## 476   8    static       V18     325.383
+## 477   8    static       V18     351.007
+## 478   8    static       V18     306.017
+## 479   8    static       V18     309.374
+## 480   8    static       V18      308.92
+## 481   8    static       V18     310.803
+## 482   8    static       V18     321.925
+## 483   8    static       V18     344.958
+## 484   8    static       V18      299.46
+## 485   8    static       V18     350.555
+## 486   8    static       V18     302.218
+## 487   8    static       V18     339.685
+## 488   8    static       V18     321.901
+## 489   8    static       V18     339.524
+## 490   8    static       V18     319.257
+## 491   8    static       V18     356.838
+## 492   8    static       V18     359.345
+## 493   8    static       V18     322.004
+## 494   8    static       V18     299.799
+## 495   8    static       V18     349.533
+## 496   8    static       V18     301.584
+## 497   8    static       V18     336.203
+## 498   8    static       V18     287.069
+## 499   8  variable       V31     307.451
+## 500   8  variable       V31     281.776
+## 501   8  variable       V31     310.937
+## 502   8  variable       V31     333.118
+## 503   8  variable       V31     350.482
+## 504   8  variable       V31     283.055
+## 505   8  variable       V31     324.259
+## 506   8  variable       V31     287.349
+## 507   8  variable       V31     335.122
+## 508   8  variable       V31     279.523
+## 509   8  variable       V31      351.99
+## 510   8  variable       V31      279.69
+## 511   8  variable       V31     299.539
+## 512   8  variable       V31     309.904
+## 513   8  variable       V31     280.404
+## 514   8  variable       V31     301.765
+## 515   8  variable       V31     375.268
+## 516   8  variable       V31     307.332
+## 517   8  variable       V31     316.678
+## 518   8  variable       V31     347.245
+## 519   8  variable       V31     332.158
+## 520   8  variable       V31     303.309
+## 521   8  variable       V31     295.584
+## 522   8  variable       V31     307.424
+## 523   8  variable       V31     332.339
+## 524   8  variable       V31     324.073
+## 525   8  variable       V31     322.145
+## 526   8  variable       V31     346.079
+## 527   8  variable       V31     313.064
+## 528   8  variable       V31     346.718
+## 529   8  variable       V31     322.001
+## 530   8  variable       V31       329.3
+## 531   8  variable       V31     321.564
+## 532   8  variable       V33     336.964
+## 533   8  variable       V33     317.062
+## 534   8  variable       V33     258.873
+## 535   8  variable       V33     325.592
+## 536   8  variable       V33     288.022
+## 537   8  variable       V33      320.67
+## 538   8  variable       V33     290.075
+## 539   8  variable       V33     277.181
+## 540   8  variable       V33     277.938
+## 541   8  variable       V33     327.395
+## 542   8  variable       V33     314.359
+## 543   8  variable       V33     290.228
+## 544   8  variable       V33     282.251
+## 545   8  variable       V33     311.535
+## 546   8  variable       V33     243.599
+## 547   8  variable       V33     356.792
+## 548   8  variable       V33     286.222
+## 549   8  variable       V33     276.699
+## 550   8  variable       V33     269.539
+## 551   8  variable       V33     289.236
+## 552   8  variable       V33     281.054
+## 553   8  variable       V33      304.73
+## 554   8  variable       V33     270.361
+## 555   8  variable       V33     275.714
+## 556   8  variable       V33     281.313
+## 557   8  variable       V33     304.748
+## 558   8  variable       V33     341.396
+## 559   8  variable       V33     283.018
+## 560   8  variable       V33     321.595
+## 561   8  variable       V33     311.363
+## 562   8  variable       V33     309.135
+## 563   8  variable       V33     271.125
+## 564   8  variable       V33     320.451
+## 565   8  variable       V33     280.853
+## 566   8  variable       V34     314.126
+## 567   8  variable       V34     271.276
+## 568   8  variable       V34     318.544
+## 569   8  variable       V34     332.744
+## 570   8  variable       V34     287.063
+## 571   8  variable       V34     342.134
+## 572   8  variable       V34     316.751
+## 573   8  variable       V34     293.844
+## 574   8  variable       V34     341.252
+## 575   8  variable       V34     308.244
+## 576   8  variable       V34      264.25
+## 577   8  variable       V34     294.768
+## 578   8  variable       V34     276.552
+## 579   8  variable       V34     306.684
+## 580   8  variable       V34     292.224
+## 581   8  variable       V34     262.508
+## 582   8  variable       V34     345.303
+## 583   8  variable       V34     290.194
+## 584   8  variable       V34     340.904
+## 585   8  variable       V34     323.438
+## 586   8  variable       V34     273.218
+## 587   8  variable       V34       329.4
+## 588   8  variable       V34     287.569
+## 589   8  variable       V34     271.212
+## 590   8  variable       V34     314.275
+## 591   8  variable       V34     331.716
+## 592   8  variable       V34     315.013
+## 593   8  variable       V34     286.125
+## 594   8  variable       V34     285.075
+## 595   8  variable       V35     321.818
+## 596   8  variable       V35     256.923
+## 597   8  variable       V35     271.093
+## 598   8  variable       V35     297.601
+## 599   8  variable       V35     293.566
+## 600   8  variable       V35     313.274
+## 601   8  variable       V35     282.876
+## 602   8  variable       V35     384.884
+## 603   8  variable       V35     301.259
+## 604   8  variable       V35     317.861
+## 605   8  variable       V35     343.926
+## 606   8  variable       V35     306.025
+## 607   8  variable       V35     313.137
+## 608   8  variable       V35     284.016
+## 609   8  variable       V35      268.96
+## 610   8  variable       V35     306.618
+## 611   8  variable       V35     286.701
+## 612   8  variable       V35     304.817
+## 613   8  variable       V35     344.024
+## 614   8  variable       V35     297.955
+## 615   8  variable       V35     344.208
+## 616   8  variable       V35     288.577
+## 617   8  variable       V35     301.292
+## 618   8  variable       V35     303.587
+## 619   8  variable       V35     310.004
+## 620   8  variable       V35     315.787
+## 621   8  variable       V35      310.04
+## 622   8  variable       V35     276.373
+## 623   8  variable       V35     280.316
+## 624</code></pre>
+</div>
+</div>
+<div id="sign" class="section level3">
+<h3><code>sign</code></h3>
+<div id="lauren-ashlock-6" class="section level4">
+<h4>Lauren Ashlock</h4>
+<p>This function returns a vector with signs of the corresponding elements of a variable. The output gives you 1 for positive values, 0, or -1 for negative values. The only argument for this function is a numeric vector</p>
+<pre class="r"><code>MyVec &lt;- c(0, 2, 5, 7, -1, -4, -7, 0, 5, -4)
+sign(MyVec)</code></pre>
+<pre><code>##  [1]  0  1  1  1 -1 -1 -1  0  1 -1</code></pre>
 </div>
 </div>
 

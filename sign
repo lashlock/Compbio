@@ -1,0 +1,11 @@
+###`sign`
+####Lauren Ashlock
+
+This function returns a vector with signs of the corresponding elements of a variable. The output gives you 1 for positive values, 0, or -1 for negative values. The only argument for this function is a numeric vector
+
+```{r}
+MyVec <- c(0, 2, 5, 7, -1, -4, -7, 0, 5, -4)
+sign(MyVec)
+
+```
+

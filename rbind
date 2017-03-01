@@ -1,0 +1,28 @@
+###`rbind`
+####Lauren Ashlock
+
+- rbind takes a sequence of vector, matrix, or data-frame areguments and combines them by rows.    
+- Arguments: are vectors or matrices, that can be given as named arguments.   
+- deparse.level is an integer argument that controls the construction of labels in the case of non-matrix-like arguments. The default is 0, which constructs no labels. 1 or 2 constructs labels from the argument names   
+- make.row.names is an argument that is only used when binding data frames. It is a logical argument that indicates if unique and valid row.names should be constructed fromt the arguments.   
+- stringsAsFactors is a logical argument that is passed to as.data.frame. This only has an effect when the arguments contain a non-data.frame) character   
+
+```{r}
+#example
+
+m<- rbind(1,1:7)
+m
+m <- rbind(m, 8:14) 
+m 
+
+#deparse.level argument
+
+dd<- 10
+rbind(1:4, c=2, "a++"=10, deparse.level =0) #this names the rows of the middle two arguments
+
+rbind(1:4, c=2, "a++"=10, dd, deparse.level=1) #this names the last three arguments (this is the default setting)
+
+rbind(1:4, c=2, "a++" =10, dd, deparse.level=2) #takes the names from each element
+
+```
+

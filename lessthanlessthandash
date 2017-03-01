@@ -1,0 +1,21 @@
+###`<<-`
+####Lauren Ashlock
+
+This function assigns a value to a variable. The arguments used are the variable and a value to be assigned to x. The difference between this function and the <- function is that <<- will search through parent environments of a package you are working in for the variable you have called. If it finds the variable in the parent environment, it will assign the value for the variable in the parent environment to the variable in your global environment. If it does not find the variable, then assignment takes place in the global environment. 
+
+```{r}
+#example
+outer_func <- function(){
+   inner_func <- function(){
+       a <<- 30
+       print(a)
+   }
+   inner_func()
+   print(a)
+}
+
+outer_func()
+print(a)
+
+```
+

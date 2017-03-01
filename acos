@@ -1,0 +1,14 @@
+###`acos`   
+
+####Lauren Ashlock
+
+The acos function calculates the arc-cosine for a given argument, x. The arccosine is the inverse cosine function of x, when -1<x<1.
+
+```{r}
+#acos function
+
+z<- c(.2,.3,.4,.5)
+acos(z)
+
+```
+
