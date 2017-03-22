@@ -1,0 +1,124 @@
+---
+title: "Untitled"
+author: "Lauren Ashlock"
+date: "March 8, 2017"
+output: html_document
+---
+### Linear Regression   
+#### Summary Output
+```{r}
+linREGSUM <- function(x=runif(10), y=runif(10)){
+  linMOD <- lm(y~x)
+  myOUT <- summary(linMOD)
+  return(myOUT)
+}
+
+linREGSUM()
+
+##With fake data
+
+linREGSUM(x=rep(1,10), y=runif(10))
+
+```
+
+### Linear Regression   
+#### Plot Output
+```{r}
+linREGPLT <- function(x=runif(10), y=runif(10)){
+  linMOD <- lm(y~x)
+  plot(y=y,x=x,pch=21,bg="lightblue",cex=2, main="Linear Regression", xlab="Generations of Exposure", ylab="Fecundity")
+abline(linMOD, add=TRUE)
+}
+
+linREGPLT()
+
+##With fake data
+
+linREGPLT(x=runif(10), y=runif(10))
+```
+
+### ANOVA   
+#### Summary Output
+
+```{r}
+
+aovSUM <- function(x=as.factor(rep(c("Control","Toxic"),each=5)), y=c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10))){
+  aovMOD <- aov(y~x)
+  myOUT <- summary(aovMOD)
+  return(myOUT)
+}
+
+aovSUM()
+
+##With fake data
+
+aovSUM(x=as.factor(rep(c("Maine","New Jersey"),each=5)), y=c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10)))
+
+```
+
+### ANOVA
+####Plot Output
+
+```{r}
+
+aovPLT <- function(x=as.factor(rep(c("Control","Toxic"),each=5)), y=c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10))){
+  aovMOD <- aov(y~x)
+  boxplot(y~x,col=c("darkolivegreen1","darkgreen"), ylab="Fecundity")
+}
+
+aovPLT()
+
+##With fake data
+
+aovPLT(x=as.factor(rep(c("Maine","New Jersey"),each=5)), y=c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10)))
+
+```
+
+
+###Contingency Table
+####Summary Output
+
+```{r}
+ContingencySUM <- function(dataMATRIX= rbind(c(90,98,89), c(70,60,20))){
+  rownames(dataMATRIX) <- c("Control","Toxic")
+  colnames(dataMATRIX) <-c("LowTOX",
+                         "MedTOX",
+                         "HighTOX")
+  myOUT <- print(chisq.test(dataMATRIX))
+  return(myOUT)
+}
+
+ContingencySUM()
+
+##With fake data
+
+ContingencySUM(dataMATRIX = rbind(c(87,66, 77), c(66, 44, 23)))
+
+```
+
+
+###Contingency Table
+#### Plot Output
+
+```{r}
+ContingencyPLT <- function(dataMATRIX= rbind(c(90,98,89), c(70,60,20))){
+  rownames(dataMATRIX) <- c("Control","Toxic")
+  colnames(dataMATRIX) <-c("LowTOX",
+                         "MedTOX",
+                         "HighTOX")
+  barplot(height=dataMATRIX,
+        beside=TRUE,
+        col=c("darkolivegreen1","darkgreen"), ylim=c(0,max(colSums(dataMATRIX))), legend = rownames(dataMATRIX),args.legend=list(
+      x=ncol(dataMATRIX) + 3,
+      y=max(colSums(dataMATRIX)),
+      bty = "n"
+    ))
+}
+
+ContingencyPLT()
+
+##With fake data
+
+ContingencySUM(dataMATRIX = rbind(c(87,66, 77), c(66, 44, 23)))
+```
+
