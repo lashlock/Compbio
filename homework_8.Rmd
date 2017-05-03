@@ -15,7 +15,7 @@ linREGSUM <- function(x=runif(10), y=runif(10)){
 
 linREGSUM()
 
-##With fake data
+##With dummy data
 
 linREGSUM(x=rep(1,10), y=runif(10))
 
@@ -32,7 +32,7 @@ abline(linMOD, add=TRUE)
 
 linREGPLT()
 
-##With fake data
+##With dummy data
 
 linREGPLT(x=runif(10), y=runif(10))
 ```
@@ -50,7 +50,7 @@ aovSUM <- function(x=as.factor(rep(c("Control","Toxic"),each=5)), y=c(rgamma(5,s
 
 aovSUM()
 
-##With fake data
+##With dummy data
 
 aovSUM(x=as.factor(rep(c("Maine","New Jersey"),each=5)), y=c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10)))
 
@@ -68,7 +68,7 @@ aovPLT <- function(x=as.factor(rep(c("Control","Toxic"),each=5)), y=c(rgamma(5,s
 
 aovPLT()
 
-##With fake data
+##With dummy data
 
 aovPLT(x=as.factor(rep(c("Maine","New Jersey"),each=5)), y=c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10)))
 
@@ -90,7 +90,7 @@ ContingencySUM <- function(dataMATRIX= rbind(c(90,98,89), c(70,60,20))){
 
 ContingencySUM()
 
-##With fake data
+##With dummy data
 
 ContingencySUM(dataMATRIX = rbind(c(87,66, 77), c(66, 44, 23)))
 
@@ -117,8 +117,51 @@ ContingencyPLT <- function(dataMATRIX= rbind(c(90,98,89), c(70,60,20))){
 
 ContingencyPLT()
 
-##With fake data
+##With dummy data
 
 ContingencySUM(dataMATRIX = rbind(c(87,66, 77), c(66, 44, 23)))
+```
+
+###Logistic Regression
+####Summary Output
+```{r}
+LogisticSUM <- function(xVar, yVar){
+  xVar <- rgamma(n=20,shape=5,scale=5)
+yVar <- rbinom(n=20,size=1,p=0.5)
+dataFrame <- data.frame(xVar,yVar)
+logRegMod <- glm(yVar ~ xVar,
+                 data=dataFrame,
+                 family=binomial(link="logit"))
+summary(logRegMod)
+}
+
+LogisticSUM()
+
+## With dummy data
+LogisticSUM(c(rgamma(n=100,shape=7, scale=1)), c(rbinom(n=100,size=1,p=0.2)))
+
+```
+
+###Logistic Regression
+####Plot Output
+```{r}
+LogisticPLT <- function(xVar, yVar){
+  xVar <- rgamma(n=20,shape=5,scale=5)
+yVar <- rbinom(n=20,size=1,p=0.5)
+dataFrame <- data.frame(xVar,yVar)
+logRegMod <- glm(yVar ~ xVar,
+                 data=dataFrame,
+                 family=binomial(link="logit"))
+plot(x=dataFrame$xVar, y=dataFrame$yVar,pch=21,bg="gray31",cex=2, xlab = "Treatment Days", ylab = "Survival", main = "Toxic Algal Survival")
+curve(predict(logRegMod,data.frame(xVar=x),type="response"),add=TRUE,lwd=2)
+}
+
+LogisticPLT()
+
+## With dummy data
+LogisticPLT(c(rgamma(n=100,shape=7, scale=1)), c(rbinom(n=100,size=1,p=0.8)))
+
+
+
 ```
 

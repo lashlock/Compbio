@@ -16,11 +16,16 @@ output:
 
 ![](abalonesml.jpg)
 
-
+### R Presentation   
+[DESEQ2 Tutorial](R_presentation.html)
 
 ### Homeworks:
 
-* [Assignment 1]()  
+#####Homework 1
+
+[Assignment 1]()  
+
+#####Homework 2
 
 [Homework 2](Assignment_2.html)
 
@@ -41,19 +46,19 @@ output:
 [Basic R commands](homework_5.html)
 
 #####Homework 6
-[Functions in R](homework_6.Rmd)
+[Functions in R](homework_6.html)
+
+#####Homework 7
+[Finishing functions in R](homework_6.html)
 
 
+#####Homework 8
+[Building Functions in R](homework_8.html)
 
-### Notes:
+#####Homework 9
+[Building Functions in R](homework_9.html)
 
-#####Lecture
-*    
+#####Homework 10
+[Building Functions in R](homework_10.html)
 
-
-
-
-
-#####Lab   
-*    
 

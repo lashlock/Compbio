@@ -1,0 +1,93 @@
+---
+title: "Untitled"
+output: html_document
+---
+### Have categorical x vars and continuous y vars, will run ANOVA on random data sets
+### First run ANOVA on bare bones random data 
+
+
+### ANOVA   
+#### Summary Output
+
+```{r}
+
+aovSUM <- function(dataFrame=data){
+     data <- cbind(as.factor(rep(c("Control","Toxic"),each=5)),c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10)))
+     data
+  x <- data[,1]
+  y <- data[,2]
+  aovMOD <- aov(y~x)
+  myOUT <- summary(aovMOD)
+  return(myOUT)
+}
+
+aovSUM()
+
+##With dummy data
+
+randomData <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovSUM(dataFrame = randomData)
+
+```
+
+### ANOVA
+####Plot Output
+
+```{r error=TRUE}
+
+aovPLT <- function(dataFrame=data){
+     data <- cbind(as.factor(rep(c("Control","Toxic"),each=5)),c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10)))
+  x <- data[,1]
+  y <- data[,2]
+  aovMOD <- aov(y~x)
+  boxplot(y~x,col=c("darkolivegreen1","darkgreen"), ylab="Fecundity")
+}
+
+aovPLT()
+
+##With dummy data
+
+
+randomData <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovPLT(dataFrame = randomData)
+```
+### Read in dataframe
+#### Dummy data modeling expected results for cope selection experiment
+#### These are my randomDataBling
+##### These data were modeled looking at variables: Temp HAB and POP, two way interaction 
+##### terms and three way interaction terms. Model assumed fecundity would be normally distributed, sd=15, variables explain 40% variation in fecundity, and a relationship factor of 0.5
+
+```{r}
+randomDataBling <- read.csv(file="copeDD", header=TRUE, sep=" ")
+```
+
+
+
+
+### ANOVA   
+#### Summary Output
+
+```{r}
+##With randomDataBling
+
+randomDataBling <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovSUM(dataFrame = randomDataBling)
+
+```
+
+### ANOVA
+####Plot Output
+
+```{r error=TRUE}
+
+##With randomDataBling
+
+
+randomDataBling <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovPLT(dataFrame = randomDataBling)
+
+```

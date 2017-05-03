@@ -1,0 +1,253 @@
+---
+title: "Untitled"
+output: html_document
+---
+### Read in dataframe
+### Dummy data modeling expected results for cope selection experiment
+
+```{r}
+dummyData <- read.csv(file="copeDD", header=TRUE, sep=" ")
+```
+
+
+##Modified Functions
+
+
+### Linear Regression   
+#### Summary Output
+```{r}
+linREGSUM <- function(dataFrame=data){
+  data <- cbind(runif(10),runif(10))
+  x <- data[,1]
+  y <- data[,2]
+  print(data)
+  linMOD <- lm(y~x)
+  myOUT <- summary(linMOD)
+  return(myOUT)
+}
+
+linREGSUM()
+
+##With dummy data
+
+copepods <- cbind(runif(50),runif(50))
+
+linREGSUM(dataFrame= copepods)
+
+```
+
+### Linear Regression   
+#### Plot Output
+```{r}
+linREGPLT <- function(dataFrame=data){
+   data <- cbind(runif(10),runif(10))
+  x <- data[,1]
+  y <- data[,2]
+  linMOD <- lm(y~x)
+  plot(y=y,x=x,pch=21,bg="lightblue",cex=2, main="Linear Regression", xlab="Generations of Exposure", ylab="Fecundity")
+abline(linMOD, add=TRUE)
+}
+
+linREGPLT()
+
+##With dummy data
+
+copepods <- cbind(runif(50),runif(50))
+linREGPLT(data = copepods)
+```
+
+### ANOVA   
+#### Summary Output
+
+```{r}
+
+aovSUM <- function(dataFrame=data){
+     data <- cbind(as.factor(rep(c("Control","Toxic"),each=5)),c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10)))
+     data
+  x <- data[,1]
+  y <- data[,2]
+  aovMOD <- aov(y~x)
+  myOUT <- summary(aovMOD)
+  return(myOUT)
+}
+
+aovSUM()
+
+##With dummy data
+
+copepods <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovSUM(dataFrame = copepods)
+
+```
+
+### ANOVA
+####Plot Output
+
+```{r}
+
+aovPLT <- function(dataFrame=data){
+     data <- cbind(as.factor(rep(c("Control","Toxic"),each=5)),c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10)))
+  x <- data[,1]
+  y <- data[,2]
+  aovMOD <- aov(y~x)
+  boxplot(y~x,col=c("darkolivegreen1","darkgreen"), ylab="Fecundity")
+}
+
+aovPLT()
+
+##With dummy data
+
+copepods <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovPLT(dataFrame = copepods)
+
+```
+
+
+###Contingency Table
+####Summary Output
+
+```{r}
+ContingencySUM <- function(dataFrame= data){
+  data <- rbind(c(90,98,89), c(70,60,20))
+  x <- data[1,]
+  y <- data[2,]
+  rownames(dataFrame) <- c("Control","Toxic")
+  colnames(dataFrame) <-c("LowTOX",
+                         "MedTOX",
+                         "HighTOX")
+  myOUT <- print(chisq.test(dataFrame))
+  return(myOUT)
+}
+
+ContingencySUM()
+
+##With dummy data
+
+copepods <- rbind(c(87,66, 77), c(66, 44, 23))
+
+ContingencySUM(dataFrame = copepods)
+
+```
+
+
+###Contingency Table
+#### Plot Output
+
+```{r}
+ContingencyPLT <- function(dataFrame= data){
+  data <- rbind(c(90,98,89), c(70,60,20))
+  x <- data[1,]
+  y <- data[2,]
+  rownames(dataFrame) <- c("Control","Toxic")
+  colnames(dataFrame) <-c("LowTOX",
+                         "MedTOX",
+                         "HighTOX")
+  barplot(height=dataFrame,
+        beside=TRUE,
+        col=c("darkolivegreen1","darkgreen"), ylim=c(0,max(colSums(dataFrame))), legend = rownames(dataFrame),args.legend=list(
+      x=ncol(dataFrame) + 3,
+      y=max(colSums(dataFrame)),
+      bty = "n"
+    ))
+}
+
+ContingencyPLT()
+
+##With dummy data
+
+copepods <- rbind(c(87,66, 77), c(66, 44, 23))
+
+ContingencySUM(dataFrame = copepods)
+```
+
+###Logistic Regression
+####Summary Output
+```{r}
+
+LogisticSUM <- function(dataFrame= data){
+  data <- data.frame(xVar=rgamma(n=20,shape=5,scale=5),yVar=rbinom(n=20,size=1,p=0.5))
+  logRegMod <- glm(yVar~xVar, data = data, family = binomial(link="logit"))
+  summary(logRegMod)
+}
+
+LogisticSUM()
+
+## With dummy data
+
+copepods <- data.frame(xVar=rgamma(n=100,shape=7,scale=1),yVar=rbinom(n=100,size=1,p=0.2))
+
+LogisticSUM(dataFrame=copepods)
+
+```
+
+###Logistic Regression
+####Plot Output
+```{r}
+LogisticPLT <- function(dataFrame= data){
+  data <- data.frame(xVar=rgamma(n=20,shape=5,scale=5),yVar=rbinom(n=20,size=1,p=0.5))
+  logRegMod <- glm(yVar~xVar, data = data, family = binomial(link="logit"))
+plot(x=dataFrame$xVar, y=dataFrame$yVar,pch=21,bg="gray31",cex=2, xlab = "Treatment Days", ylab = "Survival", main = "Toxic Algal Survival")
+curve(predict(logRegMod,data.frame(xVar=x),type="response"),add=TRUE,lwd=2)
+}
+
+LogisticPLT()
+
+## With dummy data
+
+copepods <- data.frame(xVar=rgamma(n=100,shape=7,scale=1),yVar=rbinom(n=100,size=1,p=0.8))
+
+LogisticPLT(dataFrame = copepods)
+
+```
+
+## Can run a few different ANOVAS with my dummyData
+
+### ANOVA   
+#### Summary Output
+
+```{r}
+
+aovSUM <- function(dataFrame=data){
+     data <- cbind(as.factor(rep(c("Control","Toxic"),each=5)),c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10)))
+     data
+  x <- data[,1]
+  y <- data[,2]
+  aovMOD <- aov(y~x)
+  myOUT <- summary(aovMOD)
+  return(myOUT)
+}
+
+aovSUM()
+
+##With dummy data
+
+copepods <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovSUM(dataFrame = copepods)
+
+```
+
+### ANOVA
+####Plot Output
+
+```{r}
+
+aovPLT <- function(dataFrame=data){
+     data <- cbind(as.factor(rep(c("Control","Toxic"),each=5)),c(rgamma(5,shape=5,scale=5),rgamma(5,shape=5,scale=10)))
+  x <- data[,1]
+  y <- data[,2]
+  aovMOD <- aov(y~x)
+  boxplot(y~x,col=c("darkolivegreen1","darkgreen"), ylab="Fecundity")
+}
+
+aovPLT()
+
+##With dummy data
+
+copepods <- (cbind(as.factor(rep(c("Maine","New Jersey"),each=5)),c(rgamma(8,shape=5,scale=5),rgamma(2,shape=5,scale=10))))
+
+aovPLT(dataFrame = copepods)
+
+```

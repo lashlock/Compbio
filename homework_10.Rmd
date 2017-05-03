@@ -1,0 +1,241 @@
+---
+title: "Untitled"
+output: html_document
+---
+1. Make a function that counts the number of zeros in a vector
+
+```{r}
+myDat <- round(rnorm(n=100, mean=0, sd=1))
+
+myDat
+countVec <- vector(mode="numeric")
+
+countVec
+###################################
+
+#FUNCTION: countZero
+
+#function that counts the number of zeros in a vector
+
+#input: numeric vector
+
+#output: sum of zeros in the vector
+
+# --------------------------------
+
+countZero <- function(vector = myDat){
+  for(i in 1:length(myDat)){
+    if(myDat[i]==0){
+    countVec[i]<-1  
+    }
+    else{countVec[i]<- 0}
+  }
+
+return(sum(countVec))
+}
+
+countZero()
+
+```
+
+2. Use subsetting instead of a loop to rewrite the function as a single line of code
+```{r}
+myDat <- round(rnorm(n=100, mean=0, sd=1))
+
+myDat
+
+###################################
+
+#FUNCTION: countZero2.0
+
+#one line function that counts the number of zeros in a vector
+
+#input: numeric vector
+
+#output: sum of zeros in the vector
+
+# --------------------------------
+
+countZero2.0 <- function(vector = myDat){
+return(sum(myDat==0))
+
+}
+
+countZero2.0()
+
+```
+
+3. Write a function that takes as input a numeric vector, and returns as output the maximum difference between all possible pairs of elements. Be careful to ensure that your function works properly with both negative and positive numbers. For your first version of the function, create a vector that stores all possible pairwise differences and then extracts the maximum value from that list.
+```{r}
+###############This didnt work#####################
+# 
+# #FUNCTION: pairDiff
+# 
+# # calculates the maximum difference between pairs of elements in a vector
+# 
+# #input: numeric vector
+# 
+# #output: maximum difference between all possible pairs of elements
+# 
+# # --------------------------------
+# 
+# diffVec <- c(5,10, 15,35)
+# storeVec <- vector(mode="numeric")
+# 
+# pairDiff <- function(vector=diffVec){
+#   
+#   storeVec<- abs(apply(combn(vec1,2), 2, diff))
+#   
+#   return(max(storeVec))
+# 
+#   }
+# 
+# pairDiff()
+# 
+# ###but with looping
+# 
+# X = rnorm(20,mean=0,sd=10)
+# diffVec= function(X){
+#   pairs = expand:grid(X,X)
+#   cols = rep(0,length(X)^2)
+#   x_pairs = data.frame(cols,cols)
+#   for(i in 1:length(X)){
+#     
+#   for(j in 1:length(X)){
+#     counter=counter+1
+#     iter_pairs = c(X[i], X[j])
+#     x_pairs[counter,] = iter_pairs
+#   }  
+#   
+#   }
+# 
+# }
+
+#Alex's example
+
+max_diff = function(x=c(-5, 10, -15, 5, 15, 35)){
+    
+  cols = rep(0,length(x)^2)
+  x_pairs = data.frame(cols,cols)
+  counter = 0
+  for(i in 1:length(x)){
+    for(j in 1:length(x)){
+      counter = counter + 1
+      iter_pairs<- c(x[i],x[j])
+      x_pairs[counter,] = iter_pairs
+}
+  }
+  diff = abs(x_pairs[,1] - x_pairs[,2])
+  return(max(diff))
+}
+max_diff()
+
+```
+
+4. Now modify the output of (3) to yield a list with 3 elements. The first list item is the pair of vector values that are the maximum distance apart, the second list item is the pair of numbers representing the position of these elements in the vector, and the third list item is the maximum distance calculated from this pair.
+```{r}
+# x=c(-5, 10, -15, 5, 15, 35)
+# pairs = as.matrix(expand.grid(x,x))
+# pairs
+
+#I think this is combining all pairwise combinations of x, making a data frame and then coercing it into being a matrix....
+
+max_diff = function(x=c(-5, 10, -15, 5, 15, 35)){
+  
+  pairs = as.matrix(expand.grid(x,x)) 
+  diffs = abs(pairs[,1] - pairs[,2]) #vector of absolute values of the difference between pairwise combinations
+  #diffs
+  
+  vec_max = which.max(diffs) #tells you which row contains maximum difference between var1 and var 2
+  #vec_max
+  
+  pair_max = pairs[vec_max,] #this gives you the values that are in row 18
+  #pair_max
+  
+  max_difference = max(diffs, na.rm = T) #returns max value in vector diffs
+  #max_difference
+  
+  var1_vec = which(pair_max[1] == x)
+  #var1_vec
+  var2_vec = which(pair_max[2] == x)
+  #var2_vec
+  pair_vec = c(var1_vec, var2_vec) #where elements are located in original vector
+  #pair_vec
+  
+  output = list(pair_max, pair_vec, max_difference)
+  
+  return(output)
+  
+}
+max_diff()
+```
+
+5. For a second version of (3), store only a temp variable that keeps track of each difference and then retains only the largest difference as it cycles through the pairwise differences.
+```{r}
+max_diff = function(x=vecdiff){
+  
+vecdiff <- c(-5, 10, -15, 5, 15, 35)
+  pairs = expand.grid(vecdiff,vecdiff)
+  diffs = abs(pairs$Var1 - pairs$Var2)
+  temp_max = 0
+  for(v in 1:length(diffs)){
+    
+    if(temp_max <= diffs[v]){
+      temp_max = diffs[v]
+    } #if the difference between var1 and var2 is larger than the current temp_max, replace it with that value... if not do nothing
+  }
+  return(temp_max)
+}
+max_diff()
+```
+
+6. Write a function that takes as input two matrices, and then multiplies them together, using the rules of matrix multiplication. Your function should return a warning if the input matrices are not of the correct dimensions for matrix multiplication. Check the performance of your function by comparing with the built in R function for matrix multiplication %*%.
+
+```{r}
+#make two matrices
+m1 = matrix((rnorm(4,2,1)),2,2, byrow = T)
+m2 = matrix((rnorm(4,6,1)),2,2, byrow = T)
+
+matrix_multpl = function(m1, m2){ #function with m1 and m2 as arguments
+  # create a new, empty matrix 
+  m3 = matrix(0, nrow(m1), ncol(m2))
+  if (nrow(m1) != ncol(m2)){
+    cat("input matrices are not correct dimensions", "\n")
+  } else {
+    for (i in 1:nrow(m1)){ 
+      for (j in 1:ncol(m2)){
+        cell_val = sum(m1[i,]*m2[,j]) #storing output from multiples in object
+        m3[i,j] = cell_val #Create another matrix to store the output
+      }
+    }
+  }
+  return(m3)
+}
+
+matrix_multpl(m1, m2)
+
+#test
+
+m1%*%m2
+
+#same output
+```
+
+
+7. Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+
+```{r}
+m1 = matrix((rnorm(10,6,1)),2,5, byrow = T) # make a matrix
+
+matrix_prod = function(nr, nc){
+  m = matrix(0, nr, nc) #creates matrix with nr rows and nc columns filled with zeros
+  for (r in 1:nr){
+    for (c in 1:nc){
+      m[r,c] = r*c #goes through all rows and columns and multiplies the value of the row number by the column number 
+    } 
+  }
+  return(m)
+}
+matrix_prod(4, 6)
+```
+
